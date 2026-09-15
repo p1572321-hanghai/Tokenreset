@@ -196,7 +196,53 @@
   <script>
     const TZ="Asia/Shanghai", DATA_URL=new URL("events.json",location.href).toString();
     const SUPPORT_KEY="codex-reset-support-v2", BASE_PCT=42, STEP=.4;
-    let events=[], view=new Date(), target=null, predStart=null, predEnd=null;
+    const SEEDED=[
+      ["2098685367058612394","2026-09-12T08:09:17Z","global","Reset all propagated. Sweet dreams."],
+      ["2098612714704891959","2026-09-12T03:20:36Z","global","Hi Astra users. A reset is also landing by midnight today."],
+      ["2097752790177370535","2026-09-09T18:23:34Z","banked","Banked resets not fully applying. Getting another one."],
+      ["2097174560412246215","2026-09-08T04:05:53Z","global","All reset for everyone. Enjoy the week with Astra."],
+      ["2097043464538264003","2026-09-07T19:24:57Z","global","Global reset for all paid subscriptions. Lands around 6pm PST today."],
+      ["2096035437299237298","2026-09-05T00:39:25Z","banked","Full banked reset today for Plus, Pro and Business."],
+      ["2095979536043401428","2026-09-04T20:57:17Z","banked","Covered with a banked reset. Lands by end of day."],
+      ["2095651088502591861","2026-09-03T23:12:09Z","banked","One banked reset for every day without Astra."],
+      ["2094252447271366730","2026-08-31T02:34:27Z","global","25M active users. Reset usage for all paid subscriptions."],
+      ["2093801758665715784","2026-08-29T20:43:34Z","global","Reseting usage for all paid users of Codex and ChatGPT Work."],
+      ["2091688655828246890","2026-08-24T00:46:51Z","global","Reset has been propagated to accounts."],
+      ["2090964822422949999","2026-08-22T00:50:36Z","banked","The banked reset has landed."],
+      ["2090947196107764189","2026-08-21T23:40:34Z","banked","The banked reset will be there by 8pm PST."],
+      ["2082317452755751098","2026-07-29T04:09:02Z","global","Reset usage limits for all ChatGPT Work and Codex users."],
+      ["2081940052154933696","2026-07-28T03:09:23Z","global","Usage limits have been reset for all paid users."],
+      ["2081096447718723984","2026-07-25T19:17:12Z","global","Reset usage limits for all Codex and ChatGPT Work users."],
+      ["2079609157934886975","2026-07-21T16:47:15Z","global","10M! New usage reset for paid users."],
+      ["2078320950488297917","2026-07-18T03:28:22Z","global","Oops... I did it again. Reset usage limits for all paid users."],
+      ["2076735790567338203","2026-07-13T18:29:31Z","banked","Added a banked reset to everyone's account to celebrate 7M."],
+      ["2076418567143408112","2026-07-12T21:28:59Z","banked","Added a banked reset to users in the failed window."],
+      ["2075820987833274448","2026-07-11T05:54:25Z","global","Another usage limit reset for all ChatGPT Work and Codex users."],
+      ["2075641131002700120","2026-07-10T17:59:43Z","global","Reset usage limits across Codex and ChatGPT Work."],
+      ["2075452680760443190","2026-07-10T05:30:53Z","global","Reset the rate limits again (twice) over the next 24 hours."],
+      ["2075330198887940337","2026-07-09T21:24:11Z","global","Full reset of usage limits. Propagating in the next hour."],
+      ["2071740419030053227","2026-06-29T23:39:41Z","global","Fully reset again and credit one additional reset into your bank."],
+      ["2071381664853319742","2026-06-28T23:54:07Z","global","Reset everyone's Codex usage limits. Hard reset."],
+      ["2070653282440405046","2026-06-26T23:39:48Z","global","Usage reset on the house for all Codex users."],
+      ["2062329981548802523","2026-06-04T00:25:58Z","global","Reset usage limits for Codex across all paid plans."],
+      ["2061106703446450392","2026-05-31T15:25:06Z","global","Usage limits reset for all paid ChatGPT subscriptions."],
+      ["2058280452851638313","2026-05-23T20:14:35Z","global","Reset usage limits for all accounts."],
+      ["2055707616605835333","2026-05-16T17:51:03Z","global","Usage limits reset across all paid plans."],
+      ["2049009422794408285","2026-04-28T06:14:49Z","global","Enjoy the Codex usage limit reset."],
+      ["2048997818673537399","2026-04-28T05:28:43Z","global","Reset Codex rate limits for ALL paid plans."],
+      ["2046602907077038501","2026-04-21T14:52:11Z","global","4M users. Reset the rate limits again in a few hours."],
+      ["2044943514832871564","2026-04-17T00:58:21Z","global","1-year anniversary. Codex reset its own rate limits."],
+      ["2042067902392942790","2026-04-09T02:31:42Z","global","To celebrate 3M I’ll reset again tomorrow."],
+      ["2041655710346572085","2026-04-07T23:13:48Z","global","3M users. Resetting rate limits."],
+      ["2039248564967424483","2026-04-01T07:48:39Z","global","Resetting usage limits for all plans."],
+      ["2037346989244096581","2026-03-27T01:52:28Z","global","Reset Codex usage limits across all plans."],
+      ["2004100061933064395","2025-12-25T08:01:03Z","global","Reset rate limits and lift usage to 2X until Jan 1."],
+      ["2002137269134819610","2025-12-19T22:01:37Z","global","Rewrote usage tracking and reset usage limits."],
+      ["2001114683047317723","2025-12-17T02:18:14Z","global","Reset everyone’s usage limits."],
+      ["1995988609896513743","2025-12-02T22:49:02Z","global","Reset the usage limits for everyone in Codex."]
+    ].map(([id,at,type,text])=>({id,at,type,text,url:`https://x.com/thsottiaux/status/${id}`}));
+
+    let events=SEEDED.slice(), view=new Date(), target=null, predStart=null, predEnd=null;
     const $=id=>document.getElementById(id);
     const fmt=iso=>new Date(iso).toLocaleString("zh-CN",{timeZone:TZ,hour12:false});
     const dateOnly=d=>d.toLocaleDateString("zh-CN",{timeZone:TZ,month:"long",day:"numeric"});
@@ -244,12 +290,23 @@
       renderCalendar(); tick();
     }
     async function load(){
-      try{ const r=await fetch(DATA_URL,{cache:"no-store"}); if(!r.ok)throw Error(); const data=await r.json(); events=(data.events||data).filter(e=>e&&e.at); $("src").textContent=data.source||"events.json"; $("updatedAt").textContent=data.updated_at?fmt(data.updated_at):"—"; }
-      catch{ $("feed").innerHTML='<div class="feed-item">未能加载 events.json，请通过本地服务器或部署地址访问。</div>'; }
+      try{
+        const r=await fetch(DATA_URL,{cache:"no-store"});
+        if(!r.ok) throw Error(r.status);
+        const data=await r.json();
+        const list=(data.events||data).filter(e=>e&&e.at);
+        if(list.length) events=list;
+        $("src").textContent=data.source||"events.json";
+        $("updatedAt").textContent=data.updated_at?fmt(data.updated_at):"—";
+      }catch(err){
+        $("src").textContent="内置数据";
+        $("updatedAt").textContent="—";
+        console.warn("events.json 加载失败，使用内置记录", err);
+      }
       render();
     }
-    $("prev").onclick=()=>{view.setMonth(view.getMonth()-1);renderCalendar()};
-    $("next").onclick=()=>{view.setMonth(view.getMonth()+1);renderCalendar()};
+    $("prev").onclick=()=>{view.setMonth(view.getMonth()-1);render();};
+    $("next").onclick=()=>{view.setMonth(view.getMonth()+1);render();};
     $("supportBtn").onclick=()=>{if(localStorage.getItem(SUPPORT_KEY)==="1")return;localStorage.setItem(SUPPORT_KEY,"1");localStorage.setItem(SUPPORT_KEY+"-extra",String(Number(localStorage.getItem(SUPPORT_KEY+"-extra")||0)+STEP));renderSupport()};
     const savedTheme=localStorage.getItem("reset-theme"); if(savedTheme)document.documentElement.dataset.theme=savedTheme;
     $("themeBtn").onclick=()=>{const next=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=next;localStorage.setItem("reset-theme",next)};
