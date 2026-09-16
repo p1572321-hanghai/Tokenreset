@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Codex Reset Time (London GMT) — Next Reset Countdown & History</title>
+  <meta name="description" content="Check Codex / Astra quota reset times, automatically converted to London time (GMT). Includes next reset prediction window, historical reset records, and ICS calendar subscription.">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+  <link rel="alternate" hreflang="zh-CN" href="../codex-reset-london.html">
+  <link rel="alternate" hreflang="en" href="codex-reset-london.html">
+  <link rel="alternate" hreflang="ja" href="../ja/codex-reset-london.html">
+  <link rel="alternate" hreflang="x-default" href="../codex-reset-london.html">
+  <link rel="stylesheet" href="../when.css">
+  <script>
+    window.PAGE_CONFIG = {
+      lang: "en",
+      timezone: "Europe/London",
+      city: "London",
+      cityEn: "London",
+      offset: "GMT"
+    };
+  </script>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../../index.html">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>Quota Reset Monitoring</span></div>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle dark mode" title="Toggle dark mode"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+    </header>
+
+    <nav class="breadcrumb"><a href="../../index.html">Home</a> / Reset Time / London</nav>
+
+    <h1 class="page-title">Codex Reset Time · London (GMT)</h1>
+    <p class="page-sub">All Codex / Astra quota reset times are automatically converted to London time (Europe/London). The countdown below shows how long until the next predicted reset window ends. Subscribe to your calendar with one click.</p>
+
+    <nav class="tz-nav" aria-label="Switch timezone:">
+      <span class="tz-label">Switch timezone:</span>
+      <a href="codex-reset-beijing.html">Beijing UTC+8</a>
+      <a href="codex-reset-tokyo.html">Tokyo UTC+9</a>
+      <a href="codex-reset-pst.html">Pacific PT</a>
+      <a href="codex-reset-newyork.html">New York ET</a>
+      <a href="codex-reset-london.html" class="active">London GMT</a>
+      <a href="codex-reset-utc.html">UTC</a>
+    </nav>
+
+    <nav class="lang-nav" aria-label="Language:">
+      <span class="lang-label">Language:</span>
+      <a href="../codex-reset-london.html">中文</a>
+      <a href="codex-reset-london.html" class="active">English</a>
+      <a href="../ja/codex-reset-london.html">日本語</a>
+    </nav>
+
+    <section class="panel countdown">
+      <div class="eyebrow"><span class="spark">✦</span> next estimated reset · London</div>
+      <h2>Time until predicted reset window ends</h2>
+      <div class="clock" aria-label="Time until predicted reset window ends">
+        <div class="clock-unit"><strong id="d">--</strong><span>days</span></div>
+        <div class="clock-unit"><strong id="h">--</strong><span>hrs</span></div>
+        <div class="clock-unit"><strong id="m">--</strong><span>min</span></div>
+        <div class="clock-unit"><strong id="s">--</strong><span>sec</span></div>
+      </div>
+      <div class="pred-row">
+        <p>Predicted window:<span class="range" id="predRange">Loading…</span></p>
+        <button class="ics-btn" id="icsBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4m-2-2h4"/></svg>
+          Subscribe to ICS calendar
+        </button>
+      </div>
+    </section>
+
+    <section class="info-grid">
+      <article class="panel info-card"><span>Last global reset</span><strong class="small" id="lastReset">—</strong></article>
+      <article class="panel info-card"><span>Days since</span><strong id="daysAgo">—</strong></article>
+      <article class="panel info-card"><span>History records</span><strong id="eventCount">—</strong></article>
+    </section>
+
+    <section class="panel history">
+      <h2>Reset History（London）</h2>
+      <table>
+        <thead>
+          <tr><th>Time</th><th>Type</th><th>Content</th><th>Source</th></tr>
+        </thead>
+        <tbody id="historyBody">
+          <tr><td colspan="4">Loading…</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer class="footer">
+      <span>All times converted to London (GMT) · predictions are estimates</span>
+      <span><a id="lastResetLink" href="#" target="_blank" rel="noreferrer">View latest reset source ↗</a></span>
+    </footer>
+  </main>
+
+  <script src="../when.js"></script>
+  <script>
+    const savedTheme = localStorage.getItem("reset-theme");
+    if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+    document.getElementById("themeBtn").addEventListener("click", () => {
+      const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem("reset-theme", next);
+    });
+  </script>
+</body>
+</html>

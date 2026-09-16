@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="追踪 Codex 额度重置动态，并根据历史记录推测下一次重置窗口。">
+  <meta name="theme-color" content="#0b1220">
+  <title>Codex Reset Watch</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-13E6JKQ9KS"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-13E6JKQ9KS');
+</script>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f3f6f4; --surface: rgba(255,255,255,.82); --surface-solid: #fff;
+      --ink: #111827; --muted: #667085; --soft: #eef2ef; --line: #dfe6e2;
+      --green: #167c4f; --green-bright: #2ecb78; --green-soft: #e2f7eb;
+      --yellow: #f3c74f; --yellow-soft: #fff4cf; --blue: #4c6fff;
+      --shadow: 0 18px 48px rgba(21,40,31,.08); --radius: 24px;
+    }
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #080d12; --surface: rgba(18,25,32,.88); --surface-solid: #121920;
+      --ink: #f1f5f3; --muted: #94a19b; --soft: #18221d; --line: #25342c;
+      --green: #6fe89d; --green-bright: #53df8e; --green-soft: #122d20;
+      --yellow: #f5d76e; --yellow-soft: #332d16; --blue: #8fa3ff;
+      --shadow: 0 24px 64px rgba(0,0,0,.28);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; min-width: 320px; font-family: Inter, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--ink); }
+    body::before { content:""; position: fixed; inset: 0; pointer-events:none; background: radial-gradient(circle at 78% -10%, rgba(46,203,120,.13), transparent 32%), radial-gradient(circle at -10% 35%, rgba(76,111,255,.08), transparent 28%); }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    .shell { position: relative; max-width: 1180px; margin: auto; padding: 30px 24px 72px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:28px; }
+    .brand { display:flex; align-items:center; gap:13px; }
+    .mark { width:42px; height:42px; border-radius:14px; display:grid; place-items:center; background:#0b1220; box-shadow:0 8px 20px rgba(8,18,32,.18); }
+    .mark svg { width:25px; }
+    .brand-copy strong { display:block; font-size:18px; letter-spacing:-.02em; }
+    .brand-copy span { display:block; margin-top:2px; color:var(--muted); font-size:13px; }
+    .top-actions { display:flex; align-items:center; gap:10px; }
+    .live-pill, .icon-btn { border:1px solid var(--line); background:var(--surface); backdrop-filter: blur(14px); }
+    .live-pill { display:flex; align-items:center; gap:8px; height:42px; padding:0 14px; border-radius:999px; color:var(--muted); font-size:13px; }
+    .live-dot { width:8px; height:8px; border-radius:50%; background:var(--green-bright); box-shadow:0 0 0 5px rgba(46,203,120,.12); animation:pulse 2s infinite; }
+    @keyframes pulse { 50% { box-shadow:0 0 0 8px rgba(46,203,120,0); } }
+    .icon-btn { width:42px; height:42px; border-radius:13px; display:grid; place-items:center; color:var(--ink); cursor:pointer; }
+    .icon-btn:hover { border-color:var(--green-bright); transform:translateY(-1px); }
+    .icon-btn svg { width:19px; height:19px; }
+    .overview { display:grid; grid-template-columns:minmax(0,1.45fr) minmax(310px,.75fr); gap:18px; }
+    .panel { border:1px solid var(--line); border-radius:var(--radius); background:var(--surface); backdrop-filter:blur(18px); box-shadow:var(--shadow); }
+    .countdown { min-height:332px; padding:30px; overflow:hidden; position:relative; background:linear-gradient(140deg,#0a1511 0%,#0b2420 55%,#123126 100%); border-color:#183c2c; color:#fff; }
+    .countdown::after { content:""; position:absolute; width:280px; height:280px; border:1px solid rgba(111,232,157,.22); border-radius:50%; right:-90px; top:-100px; box-shadow:0 0 0 42px rgba(111,232,157,.035),0 0 0 84px rgba(111,232,157,.025); }
+    .eyebrow { display:flex; align-items:center; gap:9px; text-transform:uppercase; letter-spacing:.12em; font-size:12px; font-weight:750; color:#91bda4; }
+    .eyebrow .spark { color:var(--yellow); font-size:15px; }
+    .countdown h1 { max-width:620px; margin:16px 0 7px; font-size:clamp(25px,3vw,38px); line-height:1.15; letter-spacing:-.04em; }
+    .countdown-sub { margin:0; color:#9eb6aa; font-size:14px; }
+    .clock { display:flex; gap:clamp(14px,3vw,34px); align-items:flex-end; margin:36px 0 27px; }
+    .clock-unit { min-width:76px; }
+    .clock-unit strong { font-size:clamp(42px,6vw,68px); line-height:.9; font-weight:650; letter-spacing:-.06em; font-variant-numeric:tabular-nums; }
+    .clock-unit span { margin-left:7px; color:#7fa08f; font-size:13px; }
+    .clock-unit:last-child strong { color:var(--green-bright); }
+    .prediction-row { position:relative; z-index:1; border-top:1px solid rgba(255,255,255,.1); padding-top:18px; display:flex; justify-content:space-between; gap:14px; align-items:center; }
+    .prediction-row p { margin:0; color:#b3c5bc; font-size:13px; }
+    .confidence { display:flex; align-items:center; gap:9px; white-space:nowrap; font-size:12px; color:#dce8e2; }
+    .confidence i { width:64px; height:6px; border-radius:999px; background:rgba(255,255,255,.12); overflow:hidden; }
+    .confidence i::after { content:""; display:block; width:15%; height:100%; border-radius:inherit; background:var(--yellow); }
+    .side { display:grid; gap:18px; }
+    .last-reset { padding:24px; display:flex; flex-direction:column; justify-content:space-between; min-height:198px; }
+    .section-label { display:flex; align-items:center; justify-content:space-between; color:var(--muted); font-size:13px; }
+    .section-label svg { width:18px; }
+    .last-main strong { display:block; margin-top:18px; font-size:34px; letter-spacing:-.04em; }
+    .last-main p { margin:5px 0 0; color:var(--muted); font-size:13px; }
+    .text-link { color:var(--green); font-size:13px; font-weight:650; text-decoration:none; }
+    .text-link:hover { text-decoration:underline; }
+    .support { padding:20px 22px; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+    .support-copy strong { display:block; font-size:14px; }
+    .support-copy span { color:var(--muted); font-size:12px; }
+    .support-btn { border:0; border-radius:12px; padding:11px 15px; background:var(--green); color:#fff; font-weight:700; font-size:13px; cursor:pointer; transition:.2s ease; }
+    .support-btn:hover:not(:disabled) { transform:translateY(-2px); filter:brightness(1.08); }
+    .support-btn:disabled { background:var(--soft); color:var(--muted); cursor:default; }
+    .tz-entry { padding:24px; margin:18px 0; }
+    .tz-chips { display:flex; flex-wrap:wrap; gap:10px; }
+    .tz-chips a { padding:10px 16px; border-radius:999px; border:1px solid var(--line); background:var(--surface-solid); color:var(--ink); text-decoration:none; font-size:14px; transition:.15s; }
+    .tz-chips a:hover { border-color:var(--green); color:var(--green); background:var(--green-soft); transform:translateY(-1px); }
+    .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0; }
+    .stat { min-height:91px; padding:18px 19px; }
+    .stat span { display:block; color:var(--muted); font-size:12px; margin-bottom:9px; }
+    .stat strong { font-size:18px; letter-spacing:-.02em; }
+    .stat strong.small { font-size:14px; }
+    .main-grid { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr); gap:18px; align-items:start; }
+    .calendar { padding:24px; }
+    .panel-head { display:flex; justify-content:space-between; align-items:center; gap:14px; margin-bottom:22px; }
+    .panel-head h2 { margin:0; font-size:18px; letter-spacing:-.02em; }
+    .panel-head p { margin:4px 0 0; color:var(--muted); font-size:12px; }
+    .month-nav { display:flex; gap:7px; align-items:center; }
+    .month-nav button { width:36px; height:36px; padding:0; border:1px solid var(--line); border-radius:11px; background:var(--surface-solid); color:var(--ink); cursor:pointer; }
+    .month-nav button:hover { border-color:var(--green); color:var(--green); }
+    .month-title { min-width:112px; text-align:center; font-size:14px; font-weight:700; }
+    .weekdays, .days { display:grid; grid-template-columns:repeat(7,1fr); gap:7px; }
+    .weekdays { margin-bottom:7px; }
+    .weekdays div { padding:6px 0; text-align:center; color:var(--muted); font-size:12px; }
+    .day { position:relative; min-height:82px; border:1px solid transparent; border-radius:15px; background:var(--soft); padding:10px; transition:.18s ease; }
+    .day.empty { opacity:.35; }
+    .day .num { font-size:12px; font-weight:650; }
+    .day.today { border-color:var(--green); box-shadow:inset 0 0 0 1px var(--green); }
+    .day.today .num { color:var(--green); }
+    .day.has-event { background:var(--green-soft); border-color:rgba(46,203,120,.24); cursor:pointer; }
+    .day.has-event:hover { transform:translateY(-2px); border-color:var(--green-bright); }
+    .day.predicted { background:var(--yellow-soft); border-color:rgba(243,199,79,.55); }
+    .event-tag { position:absolute; left:8px; right:8px; bottom:9px; padding:5px 4px; border-radius:7px; color:var(--green); font-size:11px; font-weight:750; text-align:center; background:rgba(255,255,255,.44); }
+    .pred-dot { position:absolute; right:10px; top:10px; width:7px; height:7px; border-radius:50%; background:var(--yellow); }
+    .legend { display:flex; flex-wrap:wrap; gap:16px; margin-top:18px; color:var(--muted); font-size:12px; }
+    .legend span { display:flex; align-items:center; gap:7px; }
+    .legend i { width:9px; height:9px; border-radius:3px; background:var(--green-soft); border:1px solid var(--green-bright); }
+    .legend span:nth-child(2) i { background:var(--yellow-soft); border-color:var(--yellow); }
+    .feed-panel { padding:24px 20px 12px; }
+    .feed { max-height:562px; overflow:auto; padding-right:4px; scrollbar-width:thin; scrollbar-color:var(--line) transparent; }
+    .feed-item { display:block; padding:17px 4px; border-top:1px solid var(--line); color:inherit; text-decoration:none; }
+    .feed-item:first-child { border-top:0; padding-top:4px; }
+    .feed-item:hover .feed-title { color:var(--green); }
+    .feed-meta { display:flex; align-items:center; gap:8px; margin-bottom:8px; color:var(--muted); font-size:11px; }
+    .kind { padding:4px 7px; border-radius:6px; color:var(--green); background:var(--green-soft); font-weight:750; }
+    .kind.banked { color:#967000; background:var(--yellow-soft); }
+    .feed-title { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; font-size:13px; line-height:1.55; transition:.15s; }
+    .feed-open { display:inline-flex; align-items:center; gap:4px; margin-top:9px; color:var(--muted); font-size:11px; }
+    .footer { display:flex; justify-content:space-between; gap:14px; align-items:center; margin-top:22px; color:var(--muted); font-size:12px; }
+    .footer a { color:inherit; }
+    .skeleton { animation:fade 1.2s infinite alternate; }
+    @keyframes fade { to { opacity:.5; } }
+    @media (max-width:900px) { .overview,.main-grid{grid-template-columns:1fr}.side{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(2,1fr)}.feed{max-height:none}.clock{gap:24px} }
+    @media (max-width:620px) { .shell{padding:20px 14px 48px}.brand-copy span,.live-pill span{display:none}.live-pill{width:42px;padding:0;justify-content:center}.countdown{padding:24px 20px;min-height:310px}.clock{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.clock-unit{min-width:0}.clock-unit strong{font-size:42px}.clock-unit span{display:block;margin:8px 0 0}.prediction-row{align-items:flex-start;flex-direction:column}.side{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:15px}.main-grid{display:block}.calendar{padding:19px 12px;margin-bottom:18px}.panel-head{align-items:flex-start}.month-nav{margin-top:-3px}.month-title{min-width:88px}.weekdays,.days{gap:4px}.day{min-height:58px;padding:7px;border-radius:10px}.event-tag{left:4px;right:4px;bottom:5px;padding:3px 1px;font-size:9px}.pred-dot{right:7px;top:7px}.feed-panel{padding:20px 16px}.footer{align-items:flex-start;flex-direction:column}.clock-unit strong{letter-spacing:-.08em} }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>额度重置动态监测</span></div>
+      </div>
+      <div class="top-actions">
+        <div class="live-pill"><i class="live-dot"></i><span>数据监测中</span></div>
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="切换深色模式" title="切换主题"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+      </div>
+    </header>
+
+    <section class="overview">
+      <article class="panel countdown">
+        <div class="eyebrow"><span class="spark">✦</span> next estimated reset</div>
+        <h1>距离预测重置窗口结束</h1>
+        <p class="countdown-sub" id="predRangeHero">正在读取历史重置记录…</p>
+        <div class="clock" aria-label="倒计时">
+          <div class="clock-unit"><strong id="d">--</strong><span>天</span></div>
+          <div class="clock-unit"><strong id="h">--</strong><span>时</span></div>
+          <div class="clock-unit"><strong id="m">--</strong><span>分</span></div>
+          <div class="clock-unit"><strong id="s">--</strong><span>秒</span></div>
+        </div>
+        <div class="prediction-row"><p id="predText">根据最近一次全员重置后 4–7 天推算</p><div class="confidence"><span>置信度 15%</span><i></i></div></div>
+      </article>
+
+      <div class="side">
+        <article class="panel last-reset">
+          <div class="section-label"><span>最近一次全员重置</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.6M20 4v4.6h-4.6"/></svg></div>
+          <div class="last-main"><strong id="daysAgo">—</strong><p id="lastAt">等待数据</p></div>
+          <a class="text-link" id="lastLink" href="#" target="_blank" rel="noreferrer">查看原始动态 ↗</a>
+        </article>
+        <article class="panel support">
+          <div class="support-copy"><strong>你也认为会重置？</strong><span>社区预测支持率 <b id="supportPct">42%</b></span></div>
+          <button class="support-btn" id="supportBtn" type="button">支持预测</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="状态摘要">
+      <article class="panel stat"><span>数据来源</span><strong class="small" id="src">本地记录</strong></article>
+      <article class="panel stat"><span>历史记录</span><strong id="eventCount">—</strong></article>
+      <article class="panel stat"><span>全员重置</span><strong id="globalCount">—</strong></article>
+      <article class="panel stat"><span>最后更新</span><strong class="small" id="updatedAt">—</strong></article>
+    </section>
+
+    <section class="tz-entry panel">
+      <div class="panel-head">
+        <div><h2>重置时间 · 按时区查看</h2><p>所有历史重置时间自动转换到目标时区，支持 ICS 日历订阅</p></div>
+      </div>
+      <div class="tz-chips">
+        <a href="when/codex-reset-beijing.html">🇨🇳 北京时间 UTC+8</a>
+        <a href="when/codex-reset-tokyo.html">🇯🇵 东京时间 UTC+9</a>
+        <a href="when/codex-reset-pst.html">🇺🇸 太平洋时间 PT</a>
+        <a href="when/codex-reset-newyork.html">🇺🇸 纽约时间 ET</a>
+        <a href="when/codex-reset-london.html">🇬🇧 伦敦时间 GMT</a>
+        <a href="when/codex-reset-utc.html">🌐 UTC 时间</a>
+      </div>
+    </section>
+
+    <section class="main-grid">
+      <article class="panel calendar">
+        <div class="panel-head">
+          <div><h2>重置日历</h2><p>点击标记日期可查看原始动态</p></div>
+          <div class="month-nav"><button id="prev" type="button" aria-label="上个月">‹</button><div class="month-title" id="monthTitle"></div><button id="next" type="button" aria-label="下个月">›</button></div>
+        </div>
+        <div class="weekdays"><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div><div>日</div></div>
+        <div class="days" id="days"></div>
+        <div class="legend"><span><i></i>已发生重置</span><span><i></i>预测窗口</span></div>
+      </article>
+
+      <aside class="panel feed-panel">
+        <div class="panel-head"><div><h2>重置动态</h2><p>按发布时间倒序排列</p></div><span class="live-pill" id="feedCount">— 条</span></div>
+        <div class="feed" id="feed"><div class="feed-item skeleton">正在加载…</div></div>
+      </aside>
+    </section>
+
+    <footer class="footer"><span>所有时间均已转换为 UTC+8 · 预测仅供参考</span><span>数据源自公开动态</span></footer>
+  </main>
+
+  <script>
+    const TZ="Asia/Shanghai", DATA_URL=new URL("events.json",location.href).toString();
+    const SUPPORT_KEY="codex-reset-support-v2", BASE_PCT=42, STEP=.4;
+    const SEEDED=[
+      ["2098685367058612394","2026-09-12T08:09:17Z","global","Reset all propagated. Sweet dreams."],
+      ["2098612714704891959","2026-09-12T03:20:36Z","global","Hi Astra users. A reset is also landing by midnight today."],
+      ["2097752790177370535","2026-09-09T18:23:34Z","banked","Banked resets not fully applying. Getting another one."],
+      ["2097174560412246215","2026-09-08T04:05:53Z","global","All reset for everyone. Enjoy the week with Astra."],
+      ["2097043464538264003","2026-09-07T19:24:57Z","global","Global reset for all paid subscriptions. Lands around 6pm PST today."],
+      ["2096035437299237298","2026-09-05T00:39:25Z","banked","Full banked reset today for Plus, Pro and Business."],
+      ["2095979536043401428","2026-09-04T20:57:17Z","banked","Covered with a banked reset. Lands by end of day."],
+      ["2095651088502591861","2026-09-03T23:12:09Z","banked","One banked reset for every day without Astra."],
+      ["2094252447271366730","2026-08-31T02:34:27Z","global","25M active users. Reset usage for all paid subscriptions."],
+      ["2093801758665715784","2026-08-29T20:43:34Z","global","Reseting usage for all paid users of Codex and ChatGPT Work."],
+      ["2091688655828246890","2026-08-24T00:46:51Z","global","Reset has been propagated to accounts."],
+      ["2090964822422949999","2026-08-22T00:50:36Z","banked","The banked reset has landed."],
+      ["2090947196107764189","2026-08-21T23:40:34Z","banked","The banked reset will be there by 8pm PST."],
+      ["2082317452755751098","2026-07-29T04:09:02Z","global","Reset usage limits for all ChatGPT Work and Codex users."],
+      ["2081940052154933696","2026-07-28T03:09:23Z","global","Usage limits have been reset for all paid users."],
+      ["2081096447718723984","2026-07-25T19:17:12Z","global","Reset usage limits for all Codex and ChatGPT Work users."],
+      ["2079609157934886975","2026-07-21T16:47:15Z","global","10M! New usage reset for paid users."],
+      ["2078320950488297917","2026-07-18T03:28:22Z","global","Oops... I did it again. Reset usage limits for all paid users."],
+      ["2076735790567338203","2026-07-13T18:29:31Z","banked","Added a banked reset to everyone's account to celebrate 7M."],
+      ["2076418567143408112","2026-07-12T21:28:59Z","banked","Added a banked reset to users in the failed window."],
+      ["2075820987833274448","2026-07-11T05:54:25Z","global","Another usage limit reset for all ChatGPT Work and Codex users."],
+      ["2075641131002700120","2026-07-10T17:59:43Z","global","Reset usage limits across Codex and ChatGPT Work."],
+      ["2075452680760443190","2026-07-10T05:30:53Z","global","Reset the rate limits again (twice) over the next 24 hours."],
+      ["2075330198887940337","2026-07-09T21:24:11Z","global","Full reset of usage limits. Propagating in the next hour."],
+      ["2071740419030053227","2026-06-29T23:39:41Z","global","Fully reset again and credit one additional reset into your bank."],
+      ["2071381664853319742","2026-06-28T23:54:07Z","global","Reset everyone's Codex usage limits. Hard reset."],
+      ["2070653282440405046","2026-06-26T23:39:48Z","global","Usage reset on the house for all Codex users."],
+      ["2062329981548802523","2026-06-04T00:25:58Z","global","Reset usage limits for Codex across all paid plans."],
+      ["2061106703446450392","2026-05-31T15:25:06Z","global","Usage limits reset for all paid ChatGPT subscriptions."],
+      ["2058280452851638313","2026-05-23T20:14:35Z","global","Reset usage limits for all accounts."],
+      ["2055707616605835333","2026-05-16T17:51:03Z","global","Usage limits reset across all paid plans."],
+      ["2049009422794408285","2026-04-28T06:14:49Z","global","Enjoy the Codex usage limit reset."],
+      ["2048997818673537399","2026-04-28T05:28:43Z","global","Reset Codex rate limits for ALL paid plans."],
+      ["2046602907077038501","2026-04-21T14:52:11Z","global","4M users. Reset the rate limits again in a few hours."],
+      ["2044943514832871564","2026-04-17T00:58:21Z","global","1-year anniversary. Codex reset its own rate limits."],
+      ["2042067902392942790","2026-04-09T02:31:42Z","global","To celebrate 3M I’ll reset again tomorrow."],
+      ["2041655710346572085","2026-04-07T23:13:48Z","global","3M users. Resetting rate limits."],
+      ["2039248564967424483","2026-04-01T07:48:39Z","global","Resetting usage limits for all plans."],
+      ["2037346989244096581","2026-03-27T01:52:28Z","global","Reset Codex usage limits across all plans."],
+      ["2004100061933064395","2025-12-25T08:01:03Z","global","Reset rate limits and lift usage to 2X until Jan 1."],
+      ["2002137269134819610","2025-12-19T22:01:37Z","global","Rewrote usage tracking and reset usage limits."],
+      ["2001114683047317723","2025-12-17T02:18:14Z","global","Reset everyone’s usage limits."],
+      ["1995988609896513743","2025-12-02T22:49:02Z","global","Reset the usage limits for everyone in Codex."]
+    ].map(([id,at,type,text])=>({id,at,type,text,url:`https://x.com/thsottiaux/status/${id}`}));
+
+    let events=SEEDED.slice(), view=new Date(), target=null, predStart=null, predEnd=null;
+    const $=id=>document.getElementById(id);
+    const fmt=iso=>new Date(iso).toLocaleString("zh-CN",{timeZone:TZ,hour12:false});
+    const dateOnly=d=>d.toLocaleDateString("zh-CN",{timeZone:TZ,month:"long",day:"numeric"});
+    const ymd=iso=>new Intl.DateTimeFormat("en-CA",{timeZone:TZ,year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date(iso));
+    const keyOf=d=>new Intl.DateTimeFormat("en-CA",{timeZone:TZ}).format(d);
+    const addDays=(d,n)=>new Date(d.getTime()+n*864e5);
+    const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
+
+    function renderSupport(){
+      const used=localStorage.getItem(SUPPORT_KEY)==="1";
+      const pct=Math.min(99.9,BASE_PCT+Number(localStorage.getItem(SUPPORT_KEY+"-extra")||0));
+      $("supportPct").textContent=pct.toFixed(1).replace(/\.0$/,"")+"%";
+      $("supportBtn").textContent=used?"已支持":"支持预测"; $("supportBtn").disabled=used;
+    }
+    function tick(){
+      let diff=target?Math.max(0,target-Date.now()):0;
+      const vals=target?[Math.floor(diff/864e5),Math.floor(diff%864e5/36e5),Math.floor(diff%36e5/6e4),Math.floor(diff%6e4/1000)]:["--","--","--","--"];
+      ["d","h","m","s"].forEach((id,i)=>$(id).textContent=typeof vals[i]==="number"?String(vals[i]).padStart(2,"0"):vals[i]);
+    }
+    function renderCalendar(){
+      const year=view.getFullYear(),month=view.getMonth(); $("monthTitle").textContent=`${year}年 ${month+1}月`;
+      const start=(new Date(year,month,1).getDay()+6)%7, total=new Date(year,month+1,0).getDate(), today=keyOf(new Date());
+      $("days").innerHTML="";
+      for(let i=0;i<start;i++) $("days").insertAdjacentHTML("beforeend",'<div class="day empty"></div>');
+      for(let n=1;n<=total;n++){
+        const key=`${year}-${String(month+1).padStart(2,"0")}-${String(n).padStart(2,"0")}`, hits=events.filter(e=>ymd(e.at)===key);
+        const cell=document.createElement("div"); cell.className="day"+(key===today?" today":"");
+        cell.innerHTML=`<span class="num">${n}</span>`;
+        if(hits.length){ const item=hits.find(e=>e.type==="global")||hits[0]; cell.classList.add("has-event"); cell.innerHTML+=`<span class="event-tag">${item.type==="global"?"全员重置":"重置卡"}</span>`; cell.tabIndex=0; cell.role="link"; cell.onclick=()=>window.open(item.url,"_blank","noopener"); cell.onkeydown=e=>{if(e.key==="Enter")cell.click()}; }
+        else if(predStart&&key>=keyOf(predStart)&&key<=keyOf(predEnd)){cell.classList.add("predicted");cell.innerHTML+='<i class="pred-dot" title="预测窗口"></i>';}
+        $("days").appendChild(cell);
+      }
+    }
+    function render(){
+      events.sort((a,b)=>new Date(b.at)-new Date(a.at)); const last=events.find(e=>e.type==="global");
+      $("eventCount").textContent=events.length; $("globalCount").textContent=events.filter(e=>e.type==="global").length;
+      if(last){
+        const anchor=new Date(last.at); predStart=addDays(anchor,4); predEnd=addDays(anchor,7); target=predEnd.getTime();
+        $("predRangeHero").textContent=`预计 ${dateOnly(predStart)} — ${dateOnly(predEnd)}`;
+        $("predText").textContent=`预测目标：${fmt(predEnd.toISOString())}`;
+        $("daysAgo").textContent=Math.max(0,Math.floor((Date.now()-anchor)/864e5))+" 天前"; $("lastAt").textContent=fmt(last.at); $("lastLink").href=last.url;
+      }
+      $("feedCount").textContent=events.length+" 条";
+      $("feed").innerHTML=events.map(e=>`<a class="feed-item" href="${esc(e.url)}" target="_blank" rel="noreferrer"><div class="feed-meta"><span class="kind ${e.type==="banked"?"banked":""}">${e.type==="global"?"全员重置":"重置卡"}</span><span>${fmt(e.at)}</span></div><div class="feed-title">${esc(e.text)}</div><span class="feed-open">查看原文 ↗</span></a>`).join("");
+      renderCalendar(); tick();
+    }
+    async function load(){
+      try{
+        const r=await fetch(DATA_URL,{cache:"no-store"});
+        if(!r.ok) throw Error(r.status);
+        const data=await r.json();
+        const list=(data.events||data).filter(e=>e&&e.at);
+        if(list.length) events=list;
+        $("src").textContent=data.source||"events.json";
+        $("updatedAt").textContent=data.updated_at?fmt(data.updated_at):"—";
+      }catch(err){
+        $("src").textContent="内置数据";
+        $("updatedAt").textContent="—";
+        console.warn("events.json 加载失败，使用内置记录", err);
+      }
+      render();
+    }
+    $("prev").onclick=()=>{view.setMonth(view.getMonth()-1);render();};
+    $("next").onclick=()=>{view.setMonth(view.getMonth()+1);render();};
+    $("supportBtn").onclick=()=>{if(localStorage.getItem(SUPPORT_KEY)==="1")return;localStorage.setItem(SUPPORT_KEY,"1");localStorage.setItem(SUPPORT_KEY+"-extra",String(Number(localStorage.getItem(SUPPORT_KEY+"-extra")||0)+STEP));renderSupport()};
+    const savedTheme=localStorage.getItem("reset-theme"); if(savedTheme)document.documentElement.dataset.theme=savedTheme;
+    $("themeBtn").onclick=()=>{const next=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=next;localStorage.setItem("reset-theme",next)};
+    renderSupport(); load(); setInterval(tick,1000);
+  </script>
+</body>
+</html>
