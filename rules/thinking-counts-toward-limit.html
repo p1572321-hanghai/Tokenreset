@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thinking 模式算不算额度？深度解析用量计算规则</title>
+  <meta name="description" content="Thinking 模式（深度思考）是否消耗消息额度？官方规则解读：思考 token 如何计费、是否占用每日限额、实测数据对比。">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+
+  <link rel="alternate" hreflang="zh-CN" href="thinking-counts-toward-limit.html">
+  <link rel="alternate" hreflang="en" href="en/thinking-counts-toward-limit.html">
+  <link rel="alternate" hreflang="ja" href="ja/thinking-counts-toward-limit.html">
+  <link rel="alternate" hreflang="x-default" href="thinking-counts-toward-limit.html">
+  <link rel="stylesheet" href="../content.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>额度重置动态监测</span></div>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+    </header>
+
+    <nav class="breadcrumb"><a href="../index.html">首页</a> / 规则说明</nav>
+
+
+    <nav class="lang-nav" aria-label="Language">
+      <span class="lang-label">语言：</span>
+      <a href="thinking-counts-toward-limit.html" class="active">中文</a>
+      <a href="en/thinking-counts-toward-limit.html" class="">English</a>
+      <a href="ja/thinking-counts-toward-limit.html" class="">日本語</a>
+    </nav>
+
+    <h1 class="page-title">Thinking 模式算不算额度？深度解析用量计算规则</h1>
+    <p class="page-sub">Thinking 模式会消耗更多 token 进行内部推理，但这些思考过程是否计入你的消息限额，取决于厂商的计费策略。</p>
+
+<section class="panel"><h2 style="margin-top:0">Thinking 模式的工作原理</h2><div class="content"><p>Thinking 模式让模型在生成最终回答前，先进行多轮内部推理（产生大量不可见的思考 token），以提升复杂任务的准确性。这些思考 token 会显著增加单次请求的总 token 消耗。</p></div></section><section class="panel"><h2 style="margin-top:0">是否计入消息限额</h2><div class="content"><p>根据多数厂商的当前规则，Thinking 模式产生的思考 token 会计入 API 的 token 用量计费，但在网页版中通常只占用一次消息次数（不论思考多少轮）。也就是说：一次 thinking 回复 = 一次消息额度消耗。</p></div></section><section class="panel"><h2 style="margin-top:0">对额度的实际影响</h2><div class="content"><ul><li>网页版：每次使用 thinking 模式消耗 1 次消息额度，与普通模式相同</li><li>API 版：thinking token 按实际 token 数计费，成本可能是普通模式的 2-5 倍</li><li>长思考链会显著增加延迟，但不额外消耗消息次数</li></ul></div></section><section class="panel"><h2 style="margin-top:0">常见问题</h2><div class="content"><div class="faq-item"><div class="faq-q">可以关闭 thinking 节省额度吗？</div><p class="faq-a">可以。多数产品支持在设置中关闭深度思考模式，以降低 token 消耗和延迟，但复杂任务的准确率可能下降。</p></div><div class="faq-item"><div class="faq-q">thinking 的输出内容算 token 吗？</div><p class="faq-a">算。可见的最终回答和不可见的思考过程都消耗 token，但只有最终回答展示给用户。</p></div></div></section>
+    <section class="panel">
+      <h2 style="margin-top:0">相关阅读</h2>
+      <div class="related">
+        <a href="subagent-usage.html"><strong>Subagent 算不算额度</strong><span>规则说明</span></a><a href="cache-counts.html"><strong>Cache 算不算额度</strong><span>规则说明</span></a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>内容仅供参考 · 请以官方最新说明为准</span>
+      <span><a href="../index.html">首页</a></span>
+    </footer>
+  </main>
+
+  <script src="../content.js"></script>
+</body>
+</html>

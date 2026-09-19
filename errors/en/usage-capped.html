@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Usage cap reached — How to restore access after hitting the limit</title>
+  <meta name="description" content="What to do when you see 'Usage cap reached' — automatic recovery times, how to request limit increases, and best practices.">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+
+  <link rel="alternate" hreflang="zh-CN" href="../usage-capped.html">
+  <link rel="alternate" hreflang="en" href="../en/usage-capped.html">
+  <link rel="alternate" hreflang="ja" href="../ja/usage-capped.html">
+  <link rel="alternate" hreflang="x-default" href="../usage-capped.html">
+  <link rel="stylesheet" href="../../content.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../../index.html">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>Reset Watch & Guides</span></div>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+    </header>
+
+    <nav class="breadcrumb"><a href="../../index.html">Home</a> / Error Answers</nav>
+
+
+    <nav class="lang-nav" aria-label="Language">
+      <span class="lang-label">Language:</span>
+      <a href="../usage-capped.html" class="">中文</a>
+      <a href="../en/usage-capped.html" class="active">English</a>
+      <a href="../ja/usage-capped.html" class="">日本語</a>
+    </nav>
+
+    <h1 class="page-title">Usage cap reached — How to restore access after hitting the limit</h1>
+    <p class="page-sub">'Usage cap reached' typically appears when API calls or advanced features (long context, image generation) hit their consumption limit.</p>
+
+
+    <section class="panel error-block">
+      <code>Usage cap reached. Your access will be restored shortly.</code>
+      <div class="error-origin">API / 高级功能限额提示</div>
+    </section><section class="panel"><h2 style="margin-top:0">Difference from message limits</h2><div class="content"><p>Message limits cap conversation turns, while usage caps cap resource consumption (token count, compute time, generation count). Usage caps are usually higher but deplete faster.</p></div></section><section class="panel"><h2 style="margin-top:0">Automatic recovery time</h2><div class="content"><p>After hitting a usage cap, access is automatically restored at the end of the current billing cycle. Daily caps recover within 24 hours; monthly caps wait until month-end.</p></div></section><section class="panel"><h2 style="margin-top:0">How to request a limit increase</h2><div class="content"><ul><li>Submit a limit increase request in account settings</li><li>Contact support with your use case and needs</li><li>Upgrade to a higher subscription tier</li><li>Join Enterprise for custom quotas</li></ul></div></section><section class="panel"><h2 style="margin-top:0">FAQ</h2><div class="content"><div class="faq-item"><div class="faq-q">Do in-flight requests get lost?</div><p class="faq-a">Completed results are preserved. Unfinished requests are interrupted and return an error — no existing data is lost.</p></div></div></section>
+    <section class="panel">
+      <h2 style="margin-top:0">Related</h2>
+      <div class="related">
+        <a href="../limits/max-limit.html"><strong>Max tier limit</strong><span>Error Answers</span></a><a href="message-limit.html"><strong>message limit error</strong><span>Error Answers</span></a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>For reference only · Check official sources for latest info</span>
+      <span><a href="../../index.html">Home</a></span>
+    </footer>
+  </main>
+
+  <script src="../../content.js"></script>
+</body>
+</html>

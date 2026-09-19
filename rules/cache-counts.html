@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cache（缓存）命中算不算额度？Prompt Caching 计费规则</title>
+  <meta name="description" content="Prompt Caching 缓存命中是否还消耗 token？缓存计费折扣规则、命中条件、以及对每日额度的影响。">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+
+  <link rel="alternate" hreflang="zh-CN" href="cache-counts.html">
+  <link rel="alternate" hreflang="en" href="en/cache-counts.html">
+  <link rel="alternate" hreflang="ja" href="ja/cache-counts.html">
+  <link rel="alternate" hreflang="x-default" href="cache-counts.html">
+  <link rel="stylesheet" href="../content.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>额度重置动态监测</span></div>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+    </header>
+
+    <nav class="breadcrumb"><a href="../index.html">首页</a> / 规则说明</nav>
+
+
+    <nav class="lang-nav" aria-label="Language">
+      <span class="lang-label">语言：</span>
+      <a href="cache-counts.html" class="active">中文</a>
+      <a href="en/cache-counts.html" class="">English</a>
+      <a href="ja/cache-counts.html" class="">日本語</a>
+    </nav>
+
+    <h1 class="page-title">Cache（缓存）命中算不算额度？Prompt Caching 计费规则</h1>
+    <p class="page-sub">Prompt Caching 是厂商提供的一种优化：相同的 prompt 前缀被缓存后，后续命中时 token 费用大幅降低，但仍然会被计入用量。</p>
+
+<section class="panel"><h2 style="margin-top:0">缓存命中如何计费</h2><div class="content"><p>当 prompt 的前 N 个 token 与已缓存内容完全匹配时，命中部分通常按正常价格的 10%-25% 计费（具体折扣因厂商而异）。未命中的部分仍按原价计费。</p></div></section><section class="panel"><h2 style="margin-top:0">是否计入消息限额</h2><div class="content"><p>在网页版中，缓存命中不影响消息次数（仍然是一次消息 = 一次额度消耗）。在 API 版中，缓存命中的 token 会按折扣价计入用量，但不会减少消息次数计数。</p></div></section><section class="panel"><h2 style="margin-top:0">如何提高缓存命中率</h2><div class="content"><ul><li>将固定的系统提示词（system prompt）放在请求开头</li><li>保持上下文结构稳定，避免频繁变动前置内容</li><li>注意缓存有效期（通常 5 分钟 - 1 小时）</li><li>长对话中尽量复用相同的前缀结构</li></ul></div></section><section class="panel"><h2 style="margin-top:0">常见问题</h2><div class="content"><div class="faq-item"><div class="faq-q">缓存命中能省多少钱？</div><p class="faq-a">对于重复使用大段系统提示的场景，缓存命中可节省 50%-90% 的 token 费用，具体取决于命中率和缓存折扣率。</p></div><div class="faq-item"><div class="faq-q">缓存会影响回答质量吗？</div><p class="faq-a">不会。缓存只影响计费和速度，模型生成的内容质量与未缓存时完全一致。</p></div></div></section>
+    <section class="panel">
+      <h2 style="margin-top:0">相关阅读</h2>
+      <div class="related">
+        <a href="thinking-counts-toward-limit.html"><strong>Thinking 算不算额度</strong><span>规则说明</span></a><a href="../limits/max-limit.html"><strong>Max 等级额度</strong><span>规则说明</span></a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>内容仅供参考 · 请以官方最新说明为准</span>
+      <span><a href="../index.html">首页</a></span>
+    </footer>
+  </main>
+
+  <script src="../content.js"></script>
+</body>
+</html>

@@ -93,6 +93,17 @@
     .tz-chips { display:flex; flex-wrap:wrap; gap:10px; }
     .tz-chips a { padding:10px 16px; border-radius:999px; border:1px solid var(--line); background:var(--surface-solid); color:var(--ink); text-decoration:none; font-size:14px; transition:.15s; }
     .tz-chips a:hover { border-color:var(--green); color:var(--green); background:var(--green-soft); transform:translateY(-1px); }
+    .search-entry-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-top:6px; }
+    .search-card { display:flex; flex-direction:column; gap:8px; padding:18px; border-radius:18px; border:1px solid var(--line); background:var(--surface-solid); color:var(--ink); text-decoration:none; transition:.2s; }
+    .search-card:hover { transform:translateY(-3px); box-shadow:0 12px 28px rgba(21,40,31,.12); text-decoration:none; }
+    .search-card .search-icon { font-size:26px; }
+    .search-card strong { font-size:16px; }
+    .search-card p { margin:0; font-size:12.5px; color:var(--muted); line-height:1.55; }
+    .search-card.error:hover { border-color:var(--red); }
+    .search-card.rule:hover { border-color:var(--blue); }
+    .search-card.limit:hover { border-color:var(--yellow); }
+    .search-card.guide:hover { border-color:var(--green); }
+    @media (max-width:760px) { .search-entry-grid { grid-template-columns:repeat(2,1fr); } }
     .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0; }
     .stat { min-height:91px; padding:18px 19px; }
     .stat span { display:block; color:var(--muted); font-size:12px; margin-bottom:9px; }
@@ -202,6 +213,34 @@
         <a href="when/codex-reset-newyork.html">🇺🇸 纽约时间 ET</a>
         <a href="when/codex-reset-london.html">🇬🇧 伦敦时间 GMT</a>
         <a href="when/codex-reset-utc.html">🌐 UTC 时间</a>
+      </div>
+    </section>
+
+    <section class="tz-entry panel" aria-label="搜索解答入口">
+      <div class="panel-head">
+        <div><h2>搜索解答 · 常见问题</h2><p>报错解释、额度规则、用量查询，按意图分类整理</p></div>
+      </div>
+      <div class="search-entry-grid">
+        <a class="search-card error" href="errors/out-of-messages.html">
+          <span class="search-icon">⚠️</span>
+          <strong>报错解答</strong>
+          <p>out of messages / message limit / usage cap 等报错含义与解决</p>
+        </a>
+        <a class="search-card rule" href="rules/thinking-counts-toward-limit.html">
+          <span class="search-icon">📖</span>
+          <strong>规则说明</strong>
+          <p>Thinking / Subagent / Cache 算不算额度？官方规则解读</p>
+        </a>
+        <a class="search-card limit" href="limits/pro-daily-limit.html">
+          <span class="search-icon">📊</span>
+          <strong>额度数据</strong>
+          <p>Pro / Max / Plus 各等级每日额度一览与历史变更</p>
+        </a>
+        <a class="search-card guide" href="guides/how-to-check-usage.html">
+          <span class="search-icon">🛠️</span>
+          <strong>使用教程</strong>
+          <p>怎么看剩余额度、被限后怎么切账号等操作指南</p>
+        </a>
       </div>
     </section>
 

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Subagent（子エージェント）の利用は枠に含まれる？枠の共有ルール</title>
+  <meta name="description" content="Subagentの呼び出しは別課金？メインアカウントと子エージェントの枠共有ルールと、呼び出しチェーン全体の利用量計算を解説。">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+
+  <link rel="alternate" hreflang="zh-CN" href="../subagent-usage.html">
+  <link rel="alternate" hreflang="en" href="../en/subagent-usage.html">
+  <link rel="alternate" hreflang="ja" href="../ja/subagent-usage.html">
+  <link rel="alternate" hreflang="x-default" href="../subagent-usage.html">
+  <link rel="stylesheet" href="../../content.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../../index.html">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>リセット監視＆ガイド</span></div>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+    </header>
+
+    <nav class="breadcrumb"><a href="../../index.html">ホーム</a> / ルール</nav>
+
+
+    <nav class="lang-nav" aria-label="Language">
+      <span class="lang-label">言語：</span>
+      <a href="../subagent-usage.html" class="">中文</a>
+      <a href="../en/subagent-usage.html" class="">English</a>
+      <a href="../ja/subagent-usage.html" class="active">日本語</a>
+    </nav>
+
+    <h1 class="page-title">Subagent（子エージェント）の利用は枠に含まれる？枠の共有ルール</h1>
+    <p class="page-sub">メインアカウントがタスクを開始してSubagentを呼び出す際、利用量がメインアカウントと子エージェント間でどう分配されるかは多くのユーザーが関心を持つ点です。</p>
+
+<section class="panel"><h2 style="margin-top:0">Subagent呼び出しの仕組み</h2><div class="content"><p>Subagentはメインアカウント配下に作成される子エージェントで、サブタスクを独立して実行できます。メインアカウントがリクエストを開始し、Subagentがサンドボックス環境で実行、結果がメインアカウントに返ります。</p></div></section><section class="panel"><h2 style="margin-top:0">利用量の計算</h2><div class="content"><p>現在の主流な実装では、Subagentが生成するすべてのLLM利用量はメインアカウントの枠に計上されます。Subagent自体に独立した枠はなく、メインアカウントの枠を消費します。</p></div></section><section class="panel"><h2 style="margin-top:0">実際の影響</h2><div class="content"><ul><li>1回のメインリクエストが複数のSubagent呼び出しを引き起こし、複数倍のメッセージ枠を消費</li><li>Subagentのthinkingやツール呼び出しトークンはすべてメインアカウントに計上</li><li>長いタスクチェーンはメインアカウントの1日枠をすぐに使い果たす可能性がある</li></ul></div></section><section class="panel"><h2 style="margin-top:0">よくある質問</h2><div class="content"><div class="faq-item"><div class="faq-q">Subagentが失敗しても枠は消費される？</div><p class="faq-a">はい。LLM呼び出しが実行された時点で、タスクの成否に関わらず消費されたトークンとメッセージ回数は枠に計上されます。</p></div><div class="faq-item"><div class="faq-q">Subagentの利用量を制限できる？</div><p class="faq-a">一部のプラットフォームではタスクごとのトークン上限や最大呼び出しラウンドを設定できます。意図しない超過を防ぐために設定を推奨します。</p></div></div></section>
+    <section class="panel">
+      <h2 style="margin-top:0">関連記事</h2>
+      <div class="related">
+        <a href="thinking-counts-toward-limit.html"><strong>Thinking は枠に含まれる？</strong><span>ルール</span></a><a href="../limits/pro-daily-limit.html"><strong>Pro の1日枠</strong><span>ルール</span></a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>参考情報 · 最新情報は公式をご確認ください</span>
+      <span><a href="../../index.html">ホーム</a></span>
+    </footer>
+  </main>
+
+  <script src="../../content.js"></script>
+</body>
+</html>

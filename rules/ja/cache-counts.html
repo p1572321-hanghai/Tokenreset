@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>キャッシュ（プロンプトキャッシング）ヒットは枠に含まれる？キャッシュ課金ルール</title>
+  <meta name="description" content="プロンプトキャッシュヒットはトークンを消費する？キャッシュ割引ルール、ヒット条件、1日枠への影響を解説。">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+
+  <link rel="alternate" hreflang="zh-CN" href="../cache-counts.html">
+  <link rel="alternate" hreflang="en" href="../en/cache-counts.html">
+  <link rel="alternate" hreflang="ja" href="../ja/cache-counts.html">
+  <link rel="alternate" hreflang="x-default" href="../cache-counts.html">
+  <link rel="stylesheet" href="../../content.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../../index.html">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>リセット監視＆ガイド</span></div>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+    </header>
+
+    <nav class="breadcrumb"><a href="../../index.html">ホーム</a> / ルール</nav>
+
+
+    <nav class="lang-nav" aria-label="Language">
+      <span class="lang-label">言語：</span>
+      <a href="../cache-counts.html" class="">中文</a>
+      <a href="../en/cache-counts.html" class="">English</a>
+      <a href="../ja/cache-counts.html" class="active">日本語</a>
+    </nav>
+
+    <h1 class="page-title">キャッシュ（プロンプトキャッシング）ヒットは枠に含まれる？キャッシュ課金ルール</h1>
+    <p class="page-sub">プロンプトキャッシングは、繰り返し使われるプロンプトのプレフィックスをキャッシュし、ヒット時のコストを大幅に削減する最適化機能です。ただし利用量自体は計上されます。</p>
+
+<section class="panel"><h2 style="margin-top:0">キャッシュヒットの課金</h2><div class="content"><p>プロンプトの先頭Nトークンがキャッシュと完全一致した場合、ヒット部分は通常価格の10〜25%で課金されます（割引率はサービスにより異なる）。不一致部分は通常価格で課金されます。</p></div></section><section class="panel"><h2 style="margin-top:0">メッセージ枠への影響</h2><div class="content"><p>Web版ではキャッシュヒットはメッセージ回数に影響しません（1メッセージ = 1枠）。API版ではキャッシュヒットのトークンは割引価格で利用量に計上されますが、メッセージ回数は減りません。</p></div></section><section class="panel"><h2 style="margin-top:0">キャッシュヒット率を上げるには</h2><div class="content"><ul><li>固定のシステムプロンプトをリクエストの先頭に配置する</li><li>コンテキスト構造を安定させ、プレフィックスの頻繁な変更を避ける</li><li>キャッシュの有効期限（通常5分〜1時間）に注意する</li><li>長い会話では同じプレフィックス構造を再利用する</li></ul></div></section><section class="panel"><h2 style="margin-top:0">よくある質問</h2><div class="content"><div class="faq-item"><div class="faq-q">キャッシュでどれくらい節約できる？</div><p class="faq-a">大きなシステムプロンプトを繰り返し使うケースでは、ヒット率と割引率にもよりますが、トークンコストを50〜90%削減できる場合があります。</p></div><div class="faq-item"><div class="faq-q">キャッシュは回答品質に影響する？</div><p class="faq-a">いいえ。キャッシュは課金と速度にのみ影響し、モデルの出力品質は非キャッシュ時と完全に同じです。</p></div></div></section>
+    <section class="panel">
+      <h2 style="margin-top:0">関連記事</h2>
+      <div class="related">
+        <a href="thinking-counts-toward-limit.html"><strong>Thinking は枠に含まれる？</strong><span>ルール</span></a><a href="../limits/max-limit.html"><strong>Max プランの枠</strong><span>ルール</span></a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>参考情報 · 最新情報は公式をご確認ください</span>
+      <span><a href="../../index.html">ホーム</a></span>
+    </footer>
+  </main>
+
+  <script src="../../content.js"></script>
+</body>
+</html>

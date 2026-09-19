@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>残り枠の確認方法は？各AIアシスタントの利用量確認方法まとめ</title>
+  <meta name="description" content="Codex / Claude / ChatGPT の残りメッセージ枠を確認するには？各サービスの利用量ページ、/usage コマンド、API利用量監視方法をまとめました。">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+
+  <link rel="alternate" hreflang="zh-CN" href="../how-to-check-usage.html">
+  <link rel="alternate" hreflang="en" href="../en/how-to-check-usage.html">
+  <link rel="alternate" hreflang="ja" href="../ja/how-to-check-usage.html">
+  <link rel="alternate" hreflang="x-default" href="../how-to-check-usage.html">
+  <link rel="stylesheet" href="../../content.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../../index.html">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>リセット監視＆ガイド</span></div>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+    </header>
+
+    <nav class="breadcrumb"><a href="../../index.html">ホーム</a> / 使い方ガイド</nav>
+
+
+    <nav class="lang-nav" aria-label="Language">
+      <span class="lang-label">言語：</span>
+      <a href="../how-to-check-usage.html" class="">中文</a>
+      <a href="../en/how-to-check-usage.html" class="">English</a>
+      <a href="../ja/how-to-check-usage.html" class="active">日本語</a>
+    </nav>
+
+    <h1 class="page-title">残り枠の確認方法は？各AIアシスタントの利用量確認方法まとめ</h1>
+    <p class="page-sub">サービスによって残り枠の確認方法は異なります。設定ページに表示されるもの、コマンドが必要なもの、APIダッシュボードでしか確認できないものがあります。</p>
+
+<section class="panel"><h2 style="margin-top:0">Web版での確認</h2><div class="content"><ol class="steps"><li>サービスのWebサイトを開いてログイン</li><li>左下のアバターまたは設定アイコンをクリック</li><li>アカウント/サブスクリプションページの「利用量」セクションを確認</li><li>一部サービスではチャットに /usage と入力すると残り回数を表示</li></ol></div></section><section class="panel"><h2 style="margin-top:0">よく使う /usage コマンド</h2><div class="content"><p>チャットに以下を入力すると利用量を素早く確認できます：</p><ul><li>/usage — 当日の使用済みと残りメッセージ数を表示</li><li>/limit — 現在のアカウントプランの枠上限を表示</li><li>/status — アカウント状態とサブスク情報を表示</li></ul></div></section><section class="panel"><h2 style="margin-top:0">API利用量の確認</h2><div class="content"><p>APIユーザーは以下の方法で利用量を監視できます：</p><ul><li>APIコンソールのUsageページでトークン消費量を確認</li><li>/v1/usage エンドポイントを呼び出してプログラム的に取得</li><li>利用量アラートを設定して閾値到達時に通知を受け取る</li></ul></div></section><section class="panel"><h2 style="margin-top:0">よくある質問</h2><div class="content"><div class="faq-item"><div class="faq-q">表示される残り枠と実際の利用可能回数が一致しないのはなぜ？</div><p class="faq-a">一部サービスの枠表示には遅延があります。実際の利用可能回数はシステムがリアルタイムで計算するため、チャットのプロンプト表示を優先してください。</p></div><div class="faq-item"><div class="faq-q">過去の利用量履歴を見られる？</div><p class="faq-a">APIユーザーはコンソールで完全な履歴を確認できます。Web版は通常当日分のみで履歴は残りません。</p></div></div></section>
+    <section class="panel">
+      <h2 style="margin-top:0">関連記事</h2>
+      <div class="related">
+        <a href="how-to-switch-account.html"><strong>アカウント切り替え方法</strong><span>使い方ガイド</span></a><a href="../limits/pro-daily-limit.html"><strong>Pro の1日枠</strong><span>使い方ガイド</span></a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>参考情報 · 最新情報は公式をご確認ください</span>
+      <span><a href="../../index.html">ホーム</a></span>
+    </footer>
+  </main>
+
+  <script src="../../content.js"></script>
+</body>
+</html>

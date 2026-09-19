@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Usage cap reached — 用量上限已达，如何恢复访问</title>
+  <meta name="description" content="「Usage cap reached」报错说明：API 或高级功能用量达到上限后的处理方式、自动恢复时间，以及如何申请提升限额。">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+
+  <link rel="alternate" hreflang="zh-CN" href="usage-capped.html">
+  <link rel="alternate" hreflang="en" href="en/usage-capped.html">
+  <link rel="alternate" hreflang="ja" href="ja/usage-capped.html">
+  <link rel="alternate" hreflang="x-default" href="usage-capped.html">
+  <link rel="stylesheet" href="../content.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>额度重置动态监测</span></div>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+    </header>
+
+    <nav class="breadcrumb"><a href="../index.html">首页</a> / 报错解答</nav>
+
+
+    <nav class="lang-nav" aria-label="Language">
+      <span class="lang-label">语言：</span>
+      <a href="usage-capped.html" class="active">中文</a>
+      <a href="en/usage-capped.html" class="">English</a>
+      <a href="ja/usage-capped.html" class="">日本語</a>
+    </nav>
+
+    <h1 class="page-title">Usage cap reached — 用量上限已达，如何恢复访问</h1>
+    <p class="page-sub">「Usage cap reached」通常出现在 API 调用或高级功能（如长上下文、图片生成）达到用量上限时。</p>
+
+
+    <section class="panel error-block">
+      <code>Usage cap reached. Your access will be restored shortly.</code>
+      <div class="error-origin">API / 高级功能限额提示</div>
+    </section><section class="panel"><h2 style="margin-top:0">和消息限额的区别</h2><div class="content"><p>消息限额（message limit）针对对话次数，而 usage cap 针对资源消耗量（如 token 数、计算时长、生成次数）。后者通常额度更大，但消耗也更快。</p></div></section><section class="panel"><h2 style="margin-top:0">自动恢复时间</h2><div class="content"><p>达到 usage cap 后，系统会在当前计费周期结束时自动恢复。按日重置的通常在 24 小时内恢复，按月重置的则需等到月底。</p></div></section><section class="panel"><h2 style="margin-top:0">如何申请提升限额</h2><div class="content"><ul><li>在账户设置中提交限额提升申请</li><li>联系客服说明使用场景和需求</li><li>升级到更高等级订阅</li><li>加入企业版获得定制配额</li></ul></div></section><section class="panel"><h2 style="margin-top:0">常见问题</h2><div class="content"><div class="faq-item"><div class="faq-q">被限后已经发送的请求会丢失吗？</div><p class="faq-a">已完成的请求结果会保留，未完成的请求会被中断并返回错误，不会丢失已有数据。</p></div></div></section>
+    <section class="panel">
+      <h2 style="margin-top:0">相关阅读</h2>
+      <div class="related">
+        <a href="../limits/max-limit.html"><strong>Max 等级额度</strong><span>报错解答</span></a><a href="message-limit.html"><strong>message limit 报错</strong><span>报错解答</span></a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>内容仅供参考 · 请以官方最新说明为准</span>
+      <span><a href="../index.html">首页</a></span>
+    </footer>
+  </main>
+
+  <script src="../content.js"></script>
+</body>
+</html>

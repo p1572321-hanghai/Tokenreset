@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thinkingモードは枠に含まれる？利用量計算ルールを解説</title>
+  <meta name="description" content="Thinking（推論）モードはメッセージ枠を消費する？思考トークンの課金ルールと1日枠への影響を解説。">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+
+  <link rel="alternate" hreflang="zh-CN" href="../thinking-counts-toward-limit.html">
+  <link rel="alternate" hreflang="en" href="../en/thinking-counts-toward-limit.html">
+  <link rel="alternate" hreflang="ja" href="../ja/thinking-counts-toward-limit.html">
+  <link rel="alternate" hreflang="x-default" href="../thinking-counts-toward-limit.html">
+  <link rel="stylesheet" href="../../content.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../../index.html">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>リセット監視＆ガイド</span></div>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+    </header>
+
+    <nav class="breadcrumb"><a href="../../index.html">ホーム</a> / ルール</nav>
+
+
+    <nav class="lang-nav" aria-label="Language">
+      <span class="lang-label">言語：</span>
+      <a href="../thinking-counts-toward-limit.html" class="">中文</a>
+      <a href="../en/thinking-counts-toward-limit.html" class="">English</a>
+      <a href="../ja/thinking-counts-toward-limit.html" class="active">日本語</a>
+    </nav>
+
+    <h1 class="page-title">Thinkingモードは枠に含まれる？利用量計算ルールを解説</h1>
+    <p class="page-sub">Thinkingモードは内部推論のためにより多くのトークンを消費しますが、これらがメッセージ枠に含まれるかは各社の課金方針に依存します。</p>
+
+<section class="panel"><h2 style="margin-top:0">Thinkingモードの仕組み</h2><div class="content"><p>Thinkingモードでは、最終回答を生成する前にモデルが複数ラウンドの内部推論（非表示の思考トークンを大量に生成）を行い、複雑なタスクの精度を向上させます。</p></div></section><section class="panel"><h2 style="margin-top:0">メッセージ枠への影響</h2><div class="content"><p>多くのサービスの現在のルールでは、thinkingトークンはAPIのトークン課金に含まれますが、Web版では通常1回のメッセージ枠しか消費しません（推論ラウンド数に関わらず）。</p></div></section><section class="panel"><h2 style="margin-top:0">実際の枠への影響</h2><div class="content"><ul><li>Web版：thinkingモードは通常モードと同じく1回のメッセージ枠を消費</li><li>API版：thinkingトークンは実トークン数で課金され、通常モードの2〜5倍のコスト</li><li>長い推論は遅延が増えるが、メッセージ回数は追加消費しない</li></ul></div></section><section class="panel"><h2 style="margin-top:0">よくある質問</h2><div class="content"><div class="faq-item"><div class="faq-q">枠を節約するためにthinkingをオフにできる？</div><p class="faq-a">はい。多くのサービスで設定から推論モードをオフにできます。トークン消費と遅延は減りますが、複雑なタスクの精度が下がる可能性があります。</p></div><div class="faq-item"><div class="faq-q">thinkingの出力はトークンに含まれる？</div><p class="faq-a">はい。表示される最終回答と非表示の思考プロセスの両方がトークンを消費しますが、ユーザーに表示されるのは最終回答のみです。</p></div></div></section>
+    <section class="panel">
+      <h2 style="margin-top:0">関連記事</h2>
+      <div class="related">
+        <a href="subagent-usage.html"><strong>Subagent は枠に含まれる？</strong><span>ルール</span></a><a href="cache-counts.html"><strong>キャッシュは枠に含まれる？</strong><span>ルール</span></a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>参考情報 · 最新情報は公式をご確認ください</span>
+      <span><a href="../../index.html">ホーム</a></span>
+    </footer>
+  </main>
+
+  <script src="../../content.js"></script>
+</body>
+</html>

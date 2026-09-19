@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Message limit reached — メッセージ枠の上限に到達</title>
+  <meta name="description" content="「Message limit reached」が表示される理由、リセット周期の計算方法、1日の枠を上手に使うコツを解説。">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+
+  <link rel="alternate" hreflang="zh-CN" href="../message-limit.html">
+  <link rel="alternate" hreflang="en" href="../en/message-limit.html">
+  <link rel="alternate" hreflang="ja" href="../ja/message-limit.html">
+  <link rel="alternate" hreflang="x-default" href="../message-limit.html">
+  <link rel="stylesheet" href="../../content.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../../index.html">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>リセット監視＆ガイド</span></div>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+    </header>
+
+    <nav class="breadcrumb"><a href="../../index.html">ホーム</a> / エラー解決</nav>
+
+
+    <nav class="lang-nav" aria-label="Language">
+      <span class="lang-label">言語：</span>
+      <a href="../message-limit.html" class="">中文</a>
+      <a href="../en/message-limit.html" class="">English</a>
+      <a href="../ja/message-limit.html" class="active">日本語</a>
+    </nav>
+
+    <h1 class="page-title">Message limit reached — メッセージ枠の上限に到達</h1>
+    <p class="page-sub">メッセージ枠は、各社がユーザーごとの利用頻度を制御するための主要な仕組みです。上限に達すると、次のリセット周期まで一部機能が制限されます。</p>
+
+
+    <section class="panel error-block">
+      <code>Message limit reached. Please wait for the reset.</code>
+      <div class="error-origin">通用型 AI 助手限额提示</div>
+    </section><section class="panel"><h2 style="margin-top:0">枠に達する理由</h2><div class="content"><p>短時間に大量のメッセージを送信したり、1日の累計がアカウントの上限に達したりすると表示されます。乱用防止と安定性確保のための正常な仕組みです。</p></div></section><section class="panel"><h2 style="margin-top:0">リセット周期の計算</h2><div class="content"><p>多くのサービスは「暦日」ベース（UTCまたは特定タイムゾーンの午前0時）でリセットしますが、「24時間ローリング」（最終利用から24時間後）の場合もあります。</p></div></section><section class="panel"><h2 style="margin-top:0">頻繁に枠を切らさないコツ</h2><div class="content"><ul><li>複数の質問を1つのメッセージにまとめる</li><li>長いコンテキストウィンドウを使って往復を減らす</li><li>混雑時間を避ける</li><li>公式のリセット時間を把握して計画する</li></ul></div></section><section class="panel"><h2 style="margin-top:0">よくある質問</h2><div class="content"><div class="faq-item"><div class="faq-q">制限中でも使える機能は？</div><p class="faq-a">基本的なチャットは制限されますが、履歴閲覧やファイル管理は使える場合があります。API呼び出しはWeb版の枠の影響を受けません。</p></div></div></section>
+    <section class="panel">
+      <h2 style="margin-top:0">関連記事</h2>
+      <div class="related">
+        <a href="out-of-messages.html"><strong>out of messages エラー</strong><span>エラー解決</span></a><a href="../guides/how-to-switch-account.html"><strong>アカウント切り替え方法</strong><span>エラー解決</span></a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>参考情報 · 最新情報は公式をご確認ください</span>
+      <span><a href="../../index.html">ホーム</a></span>
+    </footer>
+  </main>
+
+  <script src="../../content.js"></script>
+</body>
+</html>

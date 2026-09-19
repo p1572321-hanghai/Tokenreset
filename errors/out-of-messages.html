@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>You've reached the message limit — 消息额度用完怎么办？</title>
+  <meta name="description" content="遇到「You've reached the message limit for today」报错？本文解释消息限额用完的含义、重置时间规律，以及临时替代方案。">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+
+  <link rel="alternate" hreflang="zh-CN" href="out-of-messages.html">
+  <link rel="alternate" hreflang="en" href="en/out-of-messages.html">
+  <link rel="alternate" hreflang="ja" href="ja/out-of-messages.html">
+  <link rel="alternate" hreflang="x-default" href="out-of-messages.html">
+  <link rel="stylesheet" href="../content.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>额度重置动态监测</span></div>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+    </header>
+
+    <nav class="breadcrumb"><a href="../index.html">首页</a> / 报错解答</nav>
+
+
+    <nav class="lang-nav" aria-label="Language">
+      <span class="lang-label">语言：</span>
+      <a href="out-of-messages.html" class="active">中文</a>
+      <a href="en/out-of-messages.html" class="">English</a>
+      <a href="ja/out-of-messages.html" class="">日本語</a>
+    </nav>
+
+    <h1 class="page-title">You've reached the message limit — 消息额度用完怎么办？</h1>
+    <p class="page-sub">当你看到这条提示，说明当前账号今日的消息调用次数已用完。限额按账户等级和厂商策略每日自动重置，本文帮你理解机制并找到可行方案。</p>
+
+
+    <section class="panel error-block">
+      <code>You've reached the message limit for today. Try again tomorrow.</code>
+      <div class="error-origin">Claude / ChatGPT 网页版常见提示</div>
+    </section><section class="panel"><h2 style="margin-top:0">这条报错是什么意思</h2><div class="content"><p>「You've reached the message limit for today」表示你在当前计费周期内的消息发送次数已达到上限。厂商为防止滥用和控制成本，会按天（或按月）对免费/订阅用户设置调用上限。</p></div></section><section class="panel"><h2 style="margin-top:0">额度什么时候重置</h2><div class="content"><p>不同产品的重置时间不同：Claude 网页版通常按 UTC 零点重置；ChatGPT 按账号时区或太平洋时间重置；部分产品按账号首次使用时间滚动 24 小时重置。具体以官方说明为准。</p></div></section><section class="panel"><h2 style="margin-top:0">临时解决方案</h2><div class="content"><ul><li>切换到另一个账号继续使用</li><li>使用 API 版本（额度独立于网页版）</li><li>等待重置窗口结束后再使用</li><li>升级到更高等级订阅以获得更多额度</li></ul></div></section><section class="panel"><h2 style="margin-top:0">常见问题</h2><div class="content"><div class="faq-item"><div class="faq-q">为什么我的额度比别人少？</div><p class="faq-a">不同账号等级（Free / Pro / Max）的额度不同，部分账号还处于灰度测试阶段，额度配置会有差异。</p></div><div class="faq-item"><div class="faq-q">重置后额度会累积吗？</div><p class="faq-a">通常不会。每日额度当日有效，未使用部分不会结转到次日。</p></div></div></section>
+    <section class="panel">
+      <h2 style="margin-top:0">相关阅读</h2>
+      <div class="related">
+        <a href="../limits/pro-daily-limit.html"><strong>Pro 每日额度</strong><span>报错解答</span></a><a href="../guides/how-to-check-usage.html"><strong>怎么看剩余额度</strong><span>报错解答</span></a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>内容仅供参考 · 请以官方最新说明为准</span>
+      <span><a href="../index.html">首页</a></span>
+    </footer>
+  </main>
+
+  <script src="../content.js"></script>
+</body>
+</html>

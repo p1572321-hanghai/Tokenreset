@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Does cache (prompt caching) hit count toward your limit? Caching billing rules</title>
+  <meta name="description" content="Does a prompt cache hit still consume tokens? Caching discount rules, hit conditions, and impact on daily quota explained.">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+
+  <link rel="alternate" hreflang="zh-CN" href="../cache-counts.html">
+  <link rel="alternate" hreflang="en" href="../en/cache-counts.html">
+  <link rel="alternate" hreflang="ja" href="../ja/cache-counts.html">
+  <link rel="alternate" hreflang="x-default" href="../cache-counts.html">
+  <link rel="stylesheet" href="../../content.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../../index.html">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>Reset Watch & Guides</span></div>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+    </header>
+
+    <nav class="breadcrumb"><a href="../../index.html">Home</a> / Rules</nav>
+
+
+    <nav class="lang-nav" aria-label="Language">
+      <span class="lang-label">Language:</span>
+      <a href="../cache-counts.html" class="">中文</a>
+      <a href="../en/cache-counts.html" class="active">English</a>
+      <a href="../ja/cache-counts.html" class="">日本語</a>
+    </nav>
+
+    <h1 class="page-title">Does cache (prompt caching) hit count toward your limit? Caching billing rules</h1>
+    <p class="page-sub">Prompt Caching is an optimization where repeated prompt prefixes are cached, and subsequent hits cost much less — but the usage is still counted.</p>
+
+<section class="panel"><h2 style="margin-top:0">How cache hits are billed</h2><div class="content"><p>When the first N tokens of a prompt exactly match cached content, the hit portion is typically billed at 10%-25% of the normal price (discount varies by provider). Unmatched portions are billed at full price.</p></div></section><section class="panel"><h2 style="margin-top:0">Does it count toward message limits</h2><div class="content"><p>In the web version, cache hits don't affect message count (still one message = one quota). In the API, cached-hit tokens count toward usage at the discounted rate, but don't reduce message-turn count.</p></div></section><section class="panel"><h2 style="margin-top:0">How to improve cache hit rate</h2><div class="content"><ul><li>Place fixed system prompts at the start of requests</li><li>Keep context structure stable, avoid changing prefixes frequently</li><li>Be aware of cache TTL (usually 5 min - 1 hour)</li><li>Reuse the same prefix structure in long conversations</li></ul></div></section><section class="panel"><h2 style="margin-top:0">FAQ</h2><div class="content"><div class="faq-item"><div class="faq-q">How much can caching save?</div><p class="faq-a">For workloads with large repeated system prompts, cache hits can save 50%-90% of token costs, depending on hit rate and discount.</p></div><div class="faq-item"><div class="faq-q">Does caching affect answer quality?</div><p class="faq-a">No. Caching only affects billing and speed — model output quality is identical to uncached requests.</p></div></div></section>
+    <section class="panel">
+      <h2 style="margin-top:0">Related</h2>
+      <div class="related">
+        <a href="thinking-counts-toward-limit.html"><strong>Does thinking count</strong><span>Rules</span></a><a href="../limits/max-limit.html"><strong>Max tier limit</strong><span>Rules</span></a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>For reference only · Check official sources for latest info</span>
+      <span><a href="../../index.html">Home</a></span>
+    </footer>
+  </main>
+
+  <script src="../../content.js"></script>
+</body>
+</html>

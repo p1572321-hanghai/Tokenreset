@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Message limit reached — 消息限额已达上限</title>
+  <meta name="description" content="「Message limit reached」报错详解：消息限额达到上限的原因、重置周期计算方式，以及如何合理分配每日额度。">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+
+  <link rel="alternate" hreflang="zh-CN" href="message-limit.html">
+  <link rel="alternate" hreflang="en" href="en/message-limit.html">
+  <link rel="alternate" hreflang="ja" href="ja/message-limit.html">
+  <link rel="alternate" hreflang="x-default" href="message-limit.html">
+  <link rel="stylesheet" href="../content.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>额度重置动态监测</span></div>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+    </header>
+
+    <nav class="breadcrumb"><a href="../index.html">首页</a> / 报错解答</nav>
+
+
+    <nav class="lang-nav" aria-label="Language">
+      <span class="lang-label">语言：</span>
+      <a href="message-limit.html" class="active">中文</a>
+      <a href="en/message-limit.html" class="">English</a>
+      <a href="ja/message-limit.html" class="">日本語</a>
+    </nav>
+
+    <h1 class="page-title">Message limit reached — 消息限额已达上限</h1>
+    <p class="page-sub">消息限额是厂商控制单用户调用频率的核心机制。达到上限后，部分功能会被锁定直到下一个重置周期。</p>
+
+
+    <section class="panel error-block">
+      <code>Message limit reached. Please wait for the reset.</code>
+      <div class="error-origin">通用型 AI 助手限额提示</div>
+    </section><section class="panel"><h2 style="margin-top:0">为什么会触发限额</h2><div class="content"><p>当你在较短时间内发送大量消息，或当日累计消息数达到账户等级上限时，就会触发此提示。这是厂商防止滥用和保障服务稳定性的正常机制。</p></div></section><section class="panel"><h2 style="margin-top:0">重置周期怎么算</h2><div class="content"><p>多数产品采用「自然日」重置（按 UTC 或指定时区零点），部分采用「滚动 24 小时」（从你最后一次使用起算 24 小时）。具体规则可在账户设置或官方文档中查看。</p></div></section><section class="panel"><h2 style="margin-top:0">如何避免频繁触限</h2><div class="content"><ul><li>合并多个问题到一条消息中</li><li>使用更长的上下文窗口减少往返</li><li>错开高峰时段使用</li><li>关注官方发布的重置时间，提前规划</li></ul></div></section><section class="panel"><h2 style="margin-top:0">常见问题</h2><div class="content"><div class="faq-item"><div class="faq-q">被限后还能用什么功能？</div><p class="faq-a">通常基础对话不可用，但历史记录浏览、文件管理等功能可能仍可使用。API 调用不受网页版限额影响。</p></div></div></section>
+    <section class="panel">
+      <h2 style="margin-top:0">相关阅读</h2>
+      <div class="related">
+        <a href="out-of-messages.html"><strong>out of messages 报错</strong><span>报错解答</span></a><a href="../guides/how-to-switch-account.html"><strong>怎么切换账号</strong><span>报错解答</span></a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>内容仅供参考 · 请以官方最新说明为准</span>
+      <span><a href="../index.html">首页</a></span>
+    </footer>
+  </main>
+
+  <script src="../content.js"></script>
+</body>
+</html>

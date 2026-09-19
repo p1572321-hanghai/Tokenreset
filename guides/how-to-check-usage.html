@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>怎么看剩余额度？各 AI 助手用量查询方法汇总</title>
+  <meta name="description" content="如何查看 Codex / Claude / ChatGPT 的剩余消息额度？本文汇总各产品的用量查询入口、/usage 命令用法、以及 API 用量监控方法。">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+
+  <link rel="alternate" hreflang="zh-CN" href="how-to-check-usage.html">
+  <link rel="alternate" hreflang="en" href="en/how-to-check-usage.html">
+  <link rel="alternate" hreflang="ja" href="ja/how-to-check-usage.html">
+  <link rel="alternate" hreflang="x-default" href="how-to-check-usage.html">
+  <link rel="stylesheet" href="../content.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>额度重置动态监测</span></div>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+    </header>
+
+    <nav class="breadcrumb"><a href="../index.html">首页</a> / 使用教程</nav>
+
+
+    <nav class="lang-nav" aria-label="Language">
+      <span class="lang-label">语言：</span>
+      <a href="how-to-check-usage.html" class="active">中文</a>
+      <a href="en/how-to-check-usage.html" class="">English</a>
+      <a href="ja/how-to-check-usage.html" class="">日本語</a>
+    </nav>
+
+    <h1 class="page-title">怎么看剩余额度？各 AI 助手用量查询方法汇总</h1>
+    <p class="page-sub">不同产品查看剩余额度的方式不同：有的在设置页直接显示，有的需要输入命令，有的只能通过 API 后台查询。</p>
+
+<section class="panel"><h2 style="margin-top:0">网页版查看方法</h2><div class="content"><ol class="steps"><li>打开产品官网并登录账号</li><li>点击左下角头像或设置图标</li><li>在账户/订阅页面查看「用量」或「Usage」板块</li><li>部分产品在对话框输入 /usage 可直接查看剩余次数</li></ol></div></section><section class="panel"><h2 style="margin-top:0">常用 /usage 命令</h2><div class="content"><p>在对话框输入以下命令可快速查看用量：</p><ul><li>/usage — 显示当日已用和剩余消息数</li><li>/limit — 显示当前账户等级的额度上限</li><li>/status — 显示账户状态和订阅信息</li></ul></div></section><section class="panel"><h2 style="margin-top:0">API 用量查询</h2><div class="content"><p>API 用户可通过以下方式监控用量：</p><ul><li>登录 API 控制台，在 Usage 页面查看 token 消耗</li><li>调用 /v1/usage 接口获取程序化用量数据</li><li>设置用量告警，在达到阈值时接收通知</li></ul></div></section><section class="panel"><h2 style="margin-top:0">常见问题</h2><div class="content"><div class="faq-item"><div class="faq-q">为什么显示的剩余额度和实际可用不一致？</div><p class="faq-a">部分产品的额度显示有延迟，实际可用次数以系统实时计算为准。建议以对话框提示为准。</p></div><div class="faq-item"><div class="faq-q">可以查看历史用量记录吗？</div><p class="faq-a">API 用户可在控制台查看完整历史用量；网页版通常只显示当日用量，不保留历史记录。</p></div></div></section>
+    <section class="panel">
+      <h2 style="margin-top:0">相关阅读</h2>
+      <div class="related">
+        <a href="how-to-switch-account.html"><strong>怎么切换账号</strong><span>使用教程</span></a><a href="../limits/pro-daily-limit.html"><strong>Pro 每日额度</strong><span>使用教程</span></a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>内容仅供参考 · 请以官方最新说明为准</span>
+      <span><a href="../index.html">首页</a></span>
+    </footer>
+  </main>
+
+  <script src="../content.js"></script>
+</body>
+</html>

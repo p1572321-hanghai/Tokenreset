@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pro 每日额度多少？消息限制与用量数据一览</title>
+  <meta name="description" content="Codex / Claude / ChatGPT Pro 订阅的每日消息额度是多少？本文整理各产品 Pro 等级的限额数据、历史变更记录和重置时间。">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230b1220'/%3E%3Cpath d='M18 20h28v7H18zm0 17h28v7H18z' fill='%237cfe8e'/%3E%3Ccircle cx='42' cy='23.5' r='7' fill='%23f8d96b'/%3E%3C/svg%3E">
+
+  <link rel="alternate" hreflang="zh-CN" href="pro-daily-limit.html">
+  <link rel="alternate" hreflang="en" href="en/pro-daily-limit.html">
+  <link rel="alternate" hreflang="ja" href="ja/pro-daily-limit.html">
+  <link rel="alternate" hreflang="x-default" href="pro-daily-limit.html">
+  <link rel="stylesheet" href="../content.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <a class="brand" href="../index.html">
+        <div class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M7 9h18v5H7zm0 10h18v5H7z" fill="#6fe89d"/><circle cx="22" cy="11.5" r="4.5" fill="#f5d76e"/></svg></div>
+        <div class="brand-copy"><strong>Codex Reset Watch</strong><span>额度重置动态监测</span></div>
+      </a>
+      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle theme" title="Toggle theme"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 15.3A9 9 0 1 1 8.7 3.5a7 7 0 0 0 11.8 11.8Z"/></svg></button>
+    </header>
+
+    <nav class="breadcrumb"><a href="../index.html">首页</a> / 额度数据</nav>
+
+
+    <nav class="lang-nav" aria-label="Language">
+      <span class="lang-label">语言：</span>
+      <a href="pro-daily-limit.html" class="active">中文</a>
+      <a href="en/pro-daily-limit.html" class="">English</a>
+      <a href="ja/pro-daily-limit.html" class="">日本語</a>
+    </nav>
+
+    <h1 class="page-title">Pro 每日额度多少？消息限制与用量数据一览</h1>
+    <p class="page-sub">Pro 等级是大多数重度用户的选择。各厂商的 Pro 每日额度在 50-80 条消息之间，具体数值会随厂商策略调整。</p>
+
+
+    <section class="panel">
+      <h2 style="margin-top:0">额度数据一览</h2>
+      <table class="data-table">
+        <thead><tr><th>产品</th><th>每日消息额度</th><th>重置时间</th><th>备注</th></tr></thead>
+        <tbody><tr><td>Claude Pro</td><td class="num">约 50 条</td><td class="num">UTC 00:00</td><td class="num">含 opus / sonnet 切换</td></tr><tr><td>ChatGPT Pro</td><td class="num">约 50 条</td><td class="num">PT 00:00</td><td class="num">模型切换共享额度</td></tr><tr><td>Codex Pro</td><td class="num">约 80 条</td><td class="num">滚动 24h</td><td class="num">含 thinking 模式</td></tr><tr><td>Gemini Pro</td><td class="num">约 50 条</td><td class="num">PT 00:00</td><td class="num">含图片生成</td></tr></tbody>
+      </table>
+    </section><section class="panel"><h2 style="margin-top:0">额度说明</h2><div class="content"><p>Pro 订阅的每日消息额度通常在 50-80 条之间。额度为所有模型共享，切换不同模型不会增加可用次数。长上下文和 thinking 模式不额外消耗次数，但可能影响 token 用量。</p></div></section><section class="panel"><h2 style="margin-top:0">历史变更记录</h2><div class="content"><ul><li>2025-06：多家厂商将 Pro 额度从 40 条提升至 50 条</li><li>2025-09：部分产品引入滚动 24 小时重置机制</li><li>2026-03：Codex Pro 额度提升至 80 条</li></ul></div></section><section class="panel"><h2 style="margin-top:0">如何最大化利用</h2><div class="content"><ul><li>合并相关问题，减少消息往返</li><li>善用长上下文，在一次对话中处理多个任务</li><li>关注官方公告，及时了解额度调整</li><li>使用 API 处理大批量任务，不占用网页额度</li></ul></div></section>
+    <section class="panel">
+      <h2 style="margin-top:0">相关阅读</h2>
+      <div class="related">
+        <a href="max-limit.html"><strong>Max 等级额度</strong><span>额度数据</span></a><a href="plus-limit.html"><strong>Plus 等级额度</strong><span>额度数据</span></a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>内容仅供参考 · 请以官方最新说明为准</span>
+      <span><a href="../index.html">首页</a></span>
+    </footer>
+  </main>
+
+  <script src="../content.js"></script>
+</body>
+</html>
