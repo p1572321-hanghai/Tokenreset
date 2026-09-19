@@ -216,6 +216,31 @@ a {
 .clock-unit:last-child strong {
   color: var(--green-bright);
 }
+/* 预测窗口已过：只显示「已过天数」，隐藏时/分/秒 */
+.clock.waiting .clock-unit:not(:first-child) {
+  display: none;
+}
+.clock.waiting .clock-unit:first-child strong {
+  color: var(--yellow);
+  font-size: clamp(48px, 8vw, 80px);
+}
+.clock.waiting .clock-unit:first-child span {
+  color: #b3c5bc;
+}
+.waiting-msg {
+  margin: 8px 0 0;
+  color: #91bda4;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+.ics-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.ics-btn:disabled:hover {
+  transform: none;
+  filter: none;
+}
 .pred-row {
   position: relative;
   z-index: 1;

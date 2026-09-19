@@ -23,6 +23,10 @@
       daysAgo: "天前",
       icsSummary: "Codex/Astra 重置预测窗口",
       icsDesc: "基于历史重置记录推算的预测窗口。来源：Codex Reset Watch",
+      windowEnded: "预测窗口已结束",
+      waiting: "等待官方重置公告…",
+      daysPast: "已过预测窗口",
+      dayUnit: "天",
     },
     en: {
       global: "Global Reset",
@@ -31,6 +35,10 @@
       daysAgo: "days ago",
       icsSummary: "Codex/Astra Reset Prediction Window",
       icsDesc: "Predicted window based on historical reset records. Source: Codex Reset Watch",
+      windowEnded: "Prediction window ended",
+      waiting: "Waiting for official reset announcement…",
+      daysPast: "Past window by",
+      dayUnit: "days",
     },
     ja: {
       global: "全体リセット",
@@ -39,6 +47,10 @@
       daysAgo: "日前",
       icsSummary: "Codex/Astra リセット予測ウィンドウ",
       icsDesc: "過去のリセット履歴に基づく予測ウィンドウ。出典：Codex Reset Watch",
+      windowEnded: "予測ウィンドウ終了",
+      waiting: "公式リセット発表待ち…",
+      daysPast: "ウィンドウ経過",
+      dayUnit: "日",
     },
   };
   const T = I18N[LANG] || I18N.zh;
@@ -65,6 +77,9 @@
   let predStart = null;
   let predEnd = null;
   let target = null;
+  let windowPassed = false;
+  let originalH2 = "";
+  let originalLabels = {};
 
   // ---- ICS 生成 ----
   function icsDate(d) {
@@ -107,13 +122,62 @@
 
   // ---- 倒计时 ----
   function tick() {
-    const diff = target ? Math.max(0, target - Date.now()) : 0;
-    const vals = target
-      ? [Math.floor(diff / 864e5), Math.floor((diff % 864e5) / 36e5), Math.floor((diff % 36e5) / 6e4), Math.floor((diff % 6e4) / 1000)]
-      : ["--", "--", "--", "--"];
+    if (!target) {
+      ["d", "h", "m", "s"].forEach((id) => {
+        const el = $(id);
+        if (el) el.textContent = "--";
+      });
+      return;
+    }
+
+    const now = Date.now();
+    const passed = now > target;
+
+    // 状态切换时更新标题、时钟样式、ICS 按钮
+    if (passed !== windowPassed) {
+      windowPassed = passed;
+      const h2 = document.querySelector(".countdown h2");
+      if (h2) {
+        if (!originalH2) originalH2 = h2.textContent;
+        h2.textContent = passed ? T.windowEnded : originalH2;
+      }
+      const clock = document.querySelector(".clock");
+      if (clock) clock.classList.toggle("waiting", passed);
+      const icsBtn = $("icsBtn");
+      if (icsBtn) icsBtn.disabled = passed;
+
+      // 插入/移除「等待公告」提示
+      const panel = document.querySelector(".countdown");
+      let msg = panel ? panel.querySelector(".waiting-msg") : null;
+      if (passed && !msg) {
+        msg = document.createElement("p");
+        msg.className = "waiting-msg";
+        msg.textContent = T.waiting;
+        if (clock) clock.parentNode.insertBefore(msg, clock.nextSibling);
+      } else if (!passed && msg) {
+        msg.remove();
+      }
+    }
+
+    if (passed) {
+      const daysPast = Math.floor((now - target) / 864e5);
+      const dEl = $("d");
+      if (dEl) dEl.textContent = daysPast;
+      // 保存并更新「天」的标签
+      const dSpan = dEl ? dEl.nextElementSibling : null;
+      if (dSpan) {
+        if (originalLabels.d === undefined) originalLabels.d = dSpan.textContent;
+        dSpan.textContent = T.dayUnit;
+      }
+      return;
+    }
+
+    // 正常倒计时
+    const diff = target - now;
+    const vals = [Math.floor(diff / 864e5), Math.floor((diff % 864e5) / 36e5), Math.floor((diff % 36e5) / 6e4), Math.floor((diff % 6e4) / 1000)];
     ["d", "h", "m", "s"].forEach((id, i) => {
       const el = $(id);
-      if (el) el.textContent = typeof vals[i] === "number" ? String(vals[i]).padStart(2, "0") : vals[i];
+      if (el) el.textContent = String(vals[i]).padStart(2, "0");
     });
   }
 

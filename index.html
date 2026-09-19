@@ -70,7 +70,11 @@
     .prediction-row p { margin:0; color:#b3c5bc; font-size:13px; }
     .confidence { display:flex; align-items:center; gap:9px; white-space:nowrap; font-size:12px; color:#dce8e2; }
     .confidence i { width:64px; height:6px; border-radius:999px; background:rgba(255,255,255,.12); overflow:hidden; }
-    .confidence i::after { content:""; display:block; width:15%; height:100%; border-radius:inherit; background:var(--yellow); }
+    .confidence i::after { content:""; display:block; width:var(--conf,15%); height:100%; border-radius:inherit; background:var(--yellow); transition:width .4s ease; }
+    /* 预测窗口已过 */
+    .clock.waiting .clock-unit:not(:first-child){display:none}
+    .clock.waiting .clock-unit:first-child strong{color:var(--yellow);font-size:clamp(48px,9vw,84px)}
+    .waiting-msg{margin:8px 0 0;color:#91bda4;font-size:14px;letter-spacing:.02em}
     .side { display:grid; gap:18px; }
     .last-reset { padding:24px; display:flex; flex-direction:column; justify-content:space-between; min-height:198px; }
     .section-label { display:flex; align-items:center; justify-content:space-between; color:var(--muted); font-size:13px; }
@@ -114,6 +118,8 @@
     .day.has-event { background:var(--green-soft); border-color:rgba(46,203,120,.24); cursor:pointer; }
     .day.has-event:hover { transform:translateY(-2px); border-color:var(--green-bright); }
     .day.predicted { background:var(--yellow-soft); border-color:rgba(243,199,79,.55); }
+    .day.pred-missed { background:var(--soft); border-color:var(--line); }
+    .day.pred-missed .pred-dot { background:var(--muted); }
     .event-tag { position:absolute; left:8px; right:8px; bottom:9px; padding:5px 4px; border-radius:7px; color:var(--green); font-size:11px; font-weight:750; text-align:center; background:rgba(255,255,255,.44); }
     .pred-dot { position:absolute; right:10px; top:10px; width:7px; height:7px; border-radius:50%; background:var(--yellow); }
     .legend { display:flex; flex-wrap:wrap; gap:16px; margin-top:18px; color:var(--muted); font-size:12px; }
@@ -268,7 +274,7 @@
       ["1995988609896513743","2025-12-02T22:49:02Z","global","Reset the usage limits for everyone in Codex."]
     ].map(([id,at,type,text])=>({id,at,type,text,url:`https://x.com/thsottiaux/status/${id}`}));
 
-    let events=SEEDED.slice(), view=new Date(), target=null, predStart=null, predEnd=null;
+    let events=SEEDED.slice(), view=new Date(), target=null, predStart=null, predEnd=null, windowPassed=false, originalH1="";
     const $=id=>document.getElementById(id);
     const fmt=iso=>new Date(iso).toLocaleString("zh-CN",{timeZone:TZ,hour12:false});
     const dateOnly=d=>d.toLocaleDateString("zh-CN",{timeZone:TZ,month:"long",day:"numeric"});
@@ -284,9 +290,27 @@
       $("supportBtn").textContent=used?"已支持":"支持预测"; $("supportBtn").disabled=used;
     }
     function tick(){
-      let diff=target?Math.max(0,target-Date.now()):0;
-      const vals=target?[Math.floor(diff/864e5),Math.floor(diff%864e5/36e5),Math.floor(diff%36e5/6e4),Math.floor(diff%6e4/1000)]:["--","--","--","--"];
-      ["d","h","m","s"].forEach((id,i)=>$(id).textContent=typeof vals[i]==="number"?String(vals[i]).padStart(2,"0"):vals[i]);
+      if(!target){ ["d","h","m","s"].forEach(id=>$(id).textContent="--"); return; }
+      const now=Date.now(), passed=now>target;
+      if(passed!==windowPassed){
+        windowPassed=passed;
+        const h1=document.querySelector(".countdown h1");
+        if(h1){ if(!originalH1)originalH1=h1.textContent; h1.textContent=passed?"预测窗口已结束":originalH1; }
+        const clock=document.querySelector(".clock");
+        if(clock)clock.classList.toggle("waiting",passed);
+        const panel=document.querySelector(".countdown");
+        let msg=panel?panel.querySelector(".waiting-msg"):null;
+        if(passed&&!msg){ msg=document.createElement("p"); msg.className="waiting-msg"; msg.textContent="等待官方重置公告…"; if(clock)clock.parentNode.insertBefore(msg,clock.nextSibling); }
+        else if(!passed&&msg){ msg.remove(); }
+      }
+      if(passed){
+        const daysPast=Math.floor((now-target)/864e5);
+        $("d").textContent=daysPast;
+        return;
+      }
+      const diff=target-now;
+      const vals=[Math.floor(diff/864e5),Math.floor(diff%864e5/36e5),Math.floor(diff%36e5/6e4),Math.floor(diff%6e4/1000)];
+      ["d","h","m","s"].forEach((id,i)=>$(id).textContent=String(vals[i]).padStart(2,"0"));
     }
     function renderCalendar(){
       const year=view.getFullYear(),month=view.getMonth(); $("monthTitle").textContent=`${year}年 ${month+1}月`;
@@ -298,7 +322,11 @@
         const cell=document.createElement("div"); cell.className="day"+(key===today?" today":"");
         cell.innerHTML=`<span class="num">${n}</span>`;
         if(hits.length){ const item=hits.find(e=>e.type==="global")||hits[0]; cell.classList.add("has-event"); cell.innerHTML+=`<span class="event-tag">${item.type==="global"?"全员重置":"重置卡"}</span>`; cell.tabIndex=0; cell.role="link"; cell.onclick=()=>window.open(item.url,"_blank","noopener"); cell.onkeydown=e=>{if(e.key==="Enter")cell.click()}; }
-        else if(predStart&&key>=keyOf(predStart)&&key<=keyOf(predEnd)){cell.classList.add("predicted");cell.innerHTML+='<i class="pred-dot" title="预测窗口"></i>';}
+        else if(predStart&&key>=keyOf(predStart)&&key<=keyOf(predEnd)){
+          const missed=windowPassed&&key<=today;
+          cell.classList.add(missed?"pred-missed":"predicted");
+          cell.innerHTML+=`<i class="pred-dot" title="${missed?"预测窗口（已过未重置）":"预测窗口"}"></i>`;
+        }
         $("days").appendChild(cell);
       }
     }
@@ -308,8 +336,16 @@
       if(last){
         const anchor=new Date(last.at); predStart=addDays(anchor,4); predEnd=addDays(anchor,7); target=predEnd.getTime();
         $("predRangeHero").textContent=`预计 ${dateOnly(predStart)} — ${dateOnly(predEnd)}`;
-        $("predText").textContent=`预测目标：${fmt(predEnd.toISOString())}`;
-        $("daysAgo").textContent=Math.max(0,Math.floor((Date.now()-anchor)/864e5))+" 天前"; $("lastAt").textContent=fmt(last.at); $("lastLink").href=last.url;
+        const daysSinceAnchor=Math.floor((Date.now()-anchor)/864e5);
+        $("daysAgo").textContent=Math.max(0,daysSinceAnchor)+" 天前"; $("lastAt").textContent=fmt(last.at); $("lastLink").href=last.url;
+        // 窗口过后状态
+        windowPassed=Date.now()>target;
+        const daysPast=Math.max(0,Math.floor((Date.now()-target)/864e5));
+        // 置信度：窗口内 15%，窗口过后立即降到 10%，之后每天再降 2%，最低 3%
+        const conf=windowPassed?Math.max(3,10-daysPast*2):15;
+        const confEl=document.querySelector(".confidence");
+        if(confEl){ confEl.style.setProperty("--conf",conf+"%"); confEl.querySelector("span").textContent=`置信度 ${conf}%`; }
+        $("predText").textContent=windowPassed?`预测窗口已过 ${daysPast} 天，等待官方公告`:`预测目标：${fmt(predEnd.toISOString())}`;
       }
       $("feedCount").textContent=events.length+" 条";
       $("feed").innerHTML=events.map(e=>`<a class="feed-item" href="${esc(e.url)}" target="_blank" rel="noreferrer"><div class="feed-meta"><span class="kind ${e.type==="banked"?"banked":""}">${e.type==="global"?"全员重置":"重置卡"}</span><span>${fmt(e.at)}</span></div><div class="feed-title">${esc(e.text)}</div><span class="feed-open">查看原文 ↗</span></a>`).join("");
