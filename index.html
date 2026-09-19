@@ -104,6 +104,26 @@
     .search-card.limit:hover { border-color:var(--yellow); }
     .search-card.guide:hover { border-color:var(--green); }
     @media (max-width:760px) { .search-entry-grid { grid-template-columns:repeat(2,1fr); } }
+    .search-box { display:flex; align-items:center; gap:10px; margin:4px 0 16px; padding:6px 6px 6px 16px; border:1px solid var(--line); border-radius:14px; background:var(--surface-solid); transition:border-color .2s; }
+    .search-box:focus-within { border-color:var(--green); }
+    .search-box .search-ico { width:20px; height:20px; color:var(--muted); flex-shrink:0; }
+    .search-box input { flex:1; border:none; outline:none; background:transparent; font-size:15px; color:var(--ink); padding:8px 0; min-width:0; }
+    .search-box input::placeholder { color:var(--muted); }
+    .search-box button { padding:9px 20px; border:none; border-radius:10px; background:var(--green); color:#fff; font-size:14px; font-weight:600; cursor:pointer; transition:background .15s; flex-shrink:0; }
+    .search-box button:hover { background:var(--green-bright); }
+    .search-results { display:none; margin-bottom:16px; }
+    .search-results.show { display:block; }
+    .search-result-item { display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:12px; background:var(--soft); margin-bottom:8px; cursor:pointer; transition:all .15s; text-decoration:none; color:var(--ink); }
+    .search-result-item:hover { background:var(--green-soft); transform:translateX(4px); text-decoration:none; }
+    .search-result-item .cat-tag { font-size:11px; padding:3px 9px; border-radius:6px; background:var(--surface-solid); color:var(--muted); white-space:nowrap; border:1px solid var(--line); }
+    .search-result-item.error .cat-tag { color:var(--red); border-color:var(--red); }
+    .search-result-item.rule .cat-tag { color:var(--blue); border-color:var(--blue); }
+    .search-result-item.limit .cat-tag { color:#b8860b; border-color:var(--yellow); }
+    .search-result-item.guide .cat-tag { color:var(--green); border-color:var(--green); }
+    .search-result-item .result-title { font-size:14px; font-weight:600; }
+    .search-result-item .result-desc { font-size:12px; color:var(--muted); margin-top:2px; }
+    .search-result-empty { padding:14px; text-align:center; color:var(--muted); font-size:13px; background:var(--soft); border-radius:12px; }
+    .search-result-empty a { color:var(--green); margin-left:6px; }
     .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0; }
     .stat { min-height:91px; padding:18px 19px; }
     .stat span { display:block; color:var(--muted); font-size:12px; margin-bottom:9px; }
@@ -220,7 +240,13 @@
       <div class="panel-head">
         <div><h2>搜索解答 · 常见问题</h2><p>报错解释、额度规则、用量查询，按意图分类整理</p></div>
       </div>
-      <div class="search-entry-grid">
+      <div class="search-box">
+        <svg class="search-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="searchInput" placeholder="搜索问题，如：out of messages、thinking 算不算、Pro 额度…" autocomplete="off">
+        <button type="button" id="searchBtn">查询</button>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+      <div class="search-entry-grid" id="searchEntryGrid">
         <a class="search-card error" href="errors/out-of-messages.html">
           <span class="search-icon">⚠️</span>
           <strong>报错解答</strong>
@@ -412,6 +438,91 @@
     const savedTheme=localStorage.getItem("reset-theme"); if(savedTheme)document.documentElement.dataset.theme=savedTheme;
     $("themeBtn").onclick=()=>{const next=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=next;localStorage.setItem("reset-theme",next)};
     renderSupport(); load(); setInterval(tick,1000);
+
+    // ========== 搜索框模糊匹配 ==========
+    const SEARCH_INDEX = [
+      { cat:"error", catName:"报错", url:"errors/out-of-messages.html",
+        title:"out of messages 消息额度用完",
+        keywords:"out of messages message limit 用完 额度 消息 重置 今天 claude chatgpt 报错",
+        desc:"You've reached the message limit — 消息额度用完怎么办？" },
+      { cat:"error", catName:"报错", url:"errors/message-limit.html",
+        title:"message limit reached 消息限额已达上限",
+        keywords:"message limit reached 限额 上限 达 触 频率 重置周期 每日",
+        desc:"Message limit reached — 消息限额已达上限" },
+      { cat:"error", catName:"报错", url:"errors/usage-capped.html",
+        title:"usage cap reached 用量上限",
+        keywords:"usage cap reached 用量 上限 api 高级功能 token 恢复 提升",
+        desc:"Usage cap reached — 用量上限已达，如何恢复访问" },
+      { cat:"rule", catName:"规则", url:"rules/thinking-counts-toward-limit.html",
+        title:"Thinking 模式算不算额度",
+        keywords:"thinking 算不算 额度 深度思考 推理 token 计费 消息次数 消耗",
+        desc:"Thinking 模式算不算额度？深度解析用量计算规则" },
+      { cat:"rule", catName:"规则", url:"rules/subagent-usage.html",
+        title:"Subagent 子代理算不算额度",
+        keywords:"subagent 子代理 算不算 额度 分摊 调用 主账号 用量",
+        desc:"Subagent（子代理）调用算不算额度？用量分摊规则" },
+      { cat:"rule", catName:"规则", url:"rules/cache-counts.html",
+        title:"Cache 缓存命中算不算额度",
+        keywords:"cache 缓存 算不算 额度 prompt caching 命中 折扣 token 计费",
+        desc:"Cache（缓存）命中算不算额度？Prompt Caching 计费规则" },
+      { cat:"limit", catName:"额度", url:"limits/pro-daily-limit.html",
+        title:"Pro 每日额度多少",
+        keywords:"pro 每日 额度 多少 消息 限制 50条 重置 订阅 用量",
+        desc:"Pro 每日额度多少？消息限制与用量数据一览" },
+      { cat:"limit", catName:"额度", url:"limits/max-limit.html",
+        title:"Max 等级额度多少",
+        keywords:"max 等级 额度 多少 消息 限制 最高订阅 升级 pro 区别",
+        desc:"Max 等级额度多少？最高订阅消息限制详解" },
+      { cat:"limit", catName:"额度", url:"limits/plus-limit.html",
+        title:"Plus 等级额度多少",
+        keywords:"plus 等级 额度 多少 消息 限制 入门订阅 免费 pro 区别",
+        desc:"Plus 等级额度多少？入门订阅消息限制说明" },
+      { cat:"guide", catName:"教程", url:"guides/how-to-check-usage.html",
+        title:"怎么看剩余额度 /usage 命令",
+        keywords:"怎么看 剩余 额度 用量 usage 命令 查询 查看 /usage /limit 统计",
+        desc:"怎么看剩余额度？各 AI 助手用量查询方法汇总" },
+      { cat:"guide", catName:"教程", url:"guides/how-to-switch-account.html",
+        title:"被限后怎么切换账号",
+        keywords:"怎么 切换 账号 被限 用完 多账号 管理 登出 登录 风控",
+        desc:"被限后怎么切换账号？多账号管理与切换教程" }
+    ];
+
+    const searchInput = $("searchInput");
+    const searchBtn = $("searchBtn");
+    const searchResults = $("searchResults");
+    const entryGrid = $("searchEntryGrid");
+
+    function fuzzySearch(query) {
+      const q = query.trim().toLowerCase();
+      if (!q) { searchResults.classList.remove("show"); entryGrid.style.display=""; return; }
+      const terms = q.split(/\s+/).filter(Boolean);
+      const scored = SEARCH_INDEX.map(item => {
+        const hay = (item.title + " " + item.keywords + " " + item.desc).toLowerCase();
+        let score = 0;
+        terms.forEach(t => {
+          if (hay.includes(t)) score += 1;
+          if (item.title.toLowerCase().includes(t)) score += 2;
+        });
+        return { ...item, score };
+      }).filter(r => r.score > 0).sort((a,b) => b.score - a.score).slice(0, 6);
+
+      if (scored.length === 0) {
+        searchResults.innerHTML = `<div class="search-result-empty">没有找到匹配的问题，试试其他关键词，或 <a href="errors/out-of-messages.html">浏览全部解答</a></div>`;
+        entryGrid.style.display = "none";
+      } else {
+        searchResults.innerHTML = scored.map(r =>
+          `<a class="search-result-item ${r.cat}" href="${r.url}">` +
+          `<span class="cat-tag">${r.catName}</span>` +
+          `<div><div class="result-title">${r.title}</div><div class="result-desc">${r.desc}</div></div></a>`
+        ).join("");
+        entryGrid.style.display = "none";
+      }
+      searchResults.classList.add("show");
+    }
+
+    searchInput.addEventListener("input", () => fuzzySearch(searchInput.value));
+    searchInput.addEventListener("keydown", e => { if (e.key === "Enter") fuzzySearch(searchInput.value); });
+    searchBtn.addEventListener("click", () => fuzzySearch(searchInput.value));
   </script>
 </body>
 </html>
