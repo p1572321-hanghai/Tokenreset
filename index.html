@@ -61,11 +61,21 @@
     .eyebrow .spark { color:var(--yellow); font-size:15px; }
     .countdown h1 { max-width:620px; margin:16px 0 7px; font-size:clamp(25px,3vw,38px); line-height:1.15; letter-spacing:-.04em; }
     .countdown-sub { margin:0; color:#9eb6aa; font-size:14px; }
-    .clock { display:flex; gap:clamp(14px,3vw,34px); align-items:flex-end; margin:36px 0 27px; }
+    .countdown-text { display:flex; align-items:baseline; flex-wrap:wrap; gap:6px; margin:28px 0 20px; }
+    .countdown-text span { font-size:clamp(16px,2vw,22px); color:#9eb6aa; }
+    .countdown-text strong { font-size:clamp(36px,5.5vw,56px); font-weight:650; letter-spacing:-.04em; line-height:1; color:#fff; font-variant-numeric:tabular-nums; }
+    .countdown-text strong#minutes { color:var(--green-bright); }
+    .clock { display:flex; gap:clamp(14px,3vw,34px); align-items:flex-end; margin:0 0 24px; }
     .clock-unit { min-width:76px; }
     .clock-unit strong { font-size:clamp(42px,6vw,68px); line-height:.9; font-weight:650; letter-spacing:-.06em; font-variant-numeric:tabular-nums; }
     .clock-unit span { margin-left:7px; color:#7fa08f; font-size:13px; }
     .clock-unit:last-child strong { color:var(--green-bright); }
+    .reset-progress { display:flex; align-items:center; gap:14px; }
+    .progress-bar { flex:1; height:8px; border-radius:999px; background:rgba(255,255,255,.1); overflow:hidden; }
+    .progress-fill { height:100%; border-radius:999px; background:linear-gradient(90deg,var(--green),var(--green-bright)); transition:width .5s ease; width:0%; }
+    .progress-label { font-size:13px; color:#9eb6aa; white-space:nowrap; min-width:60px; text-align:right; }
+    .countdown.waiting .countdown-text strong { color:var(--yellow); }
+    .countdown.waiting .progress-fill { background:var(--yellow); }
     .prediction-row { position:relative; z-index:1; border-top:1px solid rgba(255,255,255,.1); padding-top:18px; display:flex; justify-content:space-between; gap:14px; align-items:center; }
     .prediction-row p { margin:0; color:#b3c5bc; font-size:13px; }
     .confidence { display:flex; align-items:center; gap:9px; white-space:nowrap; font-size:12px; color:#dce8e2; }
@@ -172,7 +182,7 @@
     .skeleton { animation:fade 1.2s infinite alternate; }
     @keyframes fade { to { opacity:.5; } }
     @media (max-width:900px) { .overview,.main-grid{grid-template-columns:1fr}.side{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(2,1fr)}.feed{max-height:none}.clock{gap:24px} }
-    @media (max-width:620px) { .shell{padding:20px 14px 48px}.brand-copy span,.live-pill span{display:none}.live-pill{width:42px;padding:0;justify-content:center}.countdown{padding:24px 20px;min-height:310px}.clock{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.clock-unit{min-width:0}.clock-unit strong{font-size:42px}.clock-unit span{display:block;margin:8px 0 0}.prediction-row{align-items:flex-start;flex-direction:column}.side{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:15px}.main-grid{display:block}.calendar{padding:19px 12px;margin-bottom:18px}.panel-head{align-items:flex-start}.month-nav{margin-top:-3px}.month-title{min-width:88px}.weekdays,.days{gap:4px}.day{min-height:58px;padding:7px;border-radius:10px}.event-tag{left:4px;right:4px;bottom:5px;padding:3px 1px;font-size:9px}.pred-dot{right:7px;top:7px}.feed-panel{padding:20px 16px}.footer{align-items:flex-start;flex-direction:column}.clock-unit strong{letter-spacing:-.08em} }
+    @media (max-width:620px) { .shell{padding:20px 14px 48px}.brand-copy span,.live-pill span{display:none}.live-pill{width:42px;padding:0;justify-content:center}.countdown{padding:24px 20px;min-height:310px}.countdown-text strong{font-size:36px}.clock{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.clock-unit{min-width:0}.clock-unit strong{font-size:42px;letter-spacing:-.08em}.clock-unit span{display:block;margin:8px 0 0}.prediction-row{align-items:flex-start;flex-direction:column}.side{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:15px}.main-grid{display:block}.calendar{padding:19px 12px;margin-bottom:18px}.panel-head{align-items:flex-start}.month-nav{margin-top:-3px}.month-title{min-width:88px}.weekdays,.days{gap:4px}.day{min-height:58px;padding:7px;border-radius:10px}.event-tag{left:4px;right:4px;bottom:5px;padding:3px 1px;font-size:9px}.pred-dot{right:7px;top:7px}.feed-panel{padding:20px 16px}.footer{align-items:flex-start;flex-direction:column} }
   </style>
 </head>
 <body>
@@ -193,11 +203,20 @@
         <div class="eyebrow"><span class="spark">✦</span> next estimated reset</div>
         <h1>距离预测重置窗口结束</h1>
         <p class="countdown-sub" id="predRangeHero">正在读取历史重置记录…</p>
+        <div class="countdown-text" id="countdownText">
+          <span>将在</span>
+          <strong id="hours">--</strong><span>小时</span>
+          <strong id="minutes">--</strong><span>分钟后重置</span>
+        </div>
         <div class="clock" aria-label="倒计时">
           <div class="clock-unit"><strong id="d">--</strong><span>天</span></div>
           <div class="clock-unit"><strong id="h">--</strong><span>时</span></div>
           <div class="clock-unit"><strong id="m">--</strong><span>分</span></div>
           <div class="clock-unit"><strong id="s">--</strong><span>秒</span></div>
+        </div>
+        <div class="reset-progress">
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+          <span class="progress-label" id="progressLabel">剩余 --%</span>
         </div>
         <div class="prediction-row"><p id="predText">根据最近一次全员重置后 4–7 天推算</p><div class="confidence"><span>置信度 15%</span><i></i></div></div>
       </article>
@@ -339,7 +358,7 @@
       ["1995988609896513743","2025-12-02T22:49:02Z","global","Reset the usage limits for everyone in Codex."]
     ].map(([id,at,type,text])=>({id,at,type,text,url:`https://x.com/thsottiaux/status/${id}`}));
 
-    let events=SEEDED.slice(), view=new Date(), target=null, predStart=null, predEnd=null, windowPassed=false, originalH1="";
+    let events=SEEDED.slice(), view=new Date(), target=null, anchorTime=null, predStart=null, predEnd=null, windowPassed=false, originalH1="";
     const $=id=>document.getElementById(id);
     const fmt=iso=>new Date(iso).toLocaleString("zh-CN",{timeZone:TZ,hour12:false});
     const dateOnly=d=>d.toLocaleDateString("zh-CN",{timeZone:TZ,month:"long",day:"numeric"});
@@ -355,7 +374,12 @@
       $("supportBtn").textContent=used?"已支持":"支持预测"; $("supportBtn").disabled=used;
     }
     function tick(){
-      if(!target){ ["d","h","m","s"].forEach(id=>$(id).textContent="--"); return; }
+      if(!target){
+        $("hours").textContent="--"; $("minutes").textContent="--";
+        ["d","h","m","s"].forEach(id=>$(id).textContent="--");
+        $("progressLabel").textContent="剩余 --%"; $("progressFill").style.width="0%";
+        return;
+      }
       const now=Date.now(), passed=now>target;
       if(passed!==windowPassed){
         windowPassed=passed;
@@ -370,12 +394,24 @@
       }
       if(passed){
         const daysPast=Math.floor((now-target)/864e5);
+        $("hours").textContent=daysPast; $("minutes").textContent="0";
         $("d").textContent=daysPast;
+        $("progressFill").style.width="100%"; $("progressLabel").textContent="已过 "+daysPast+" 天";
         return;
       }
       const diff=target-now;
+      const totalHours=Math.floor(diff/36e5);
+      const minutes=Math.floor((diff%36e5)/6e4);
+      $("hours").textContent=totalHours;
+      $("minutes").textContent=String(minutes).padStart(2,"0");
       const vals=[Math.floor(diff/864e5),Math.floor(diff%864e5/36e5),Math.floor(diff%36e5/6e4),Math.floor(diff%6e4/1000)];
       ["d","h","m","s"].forEach((id,i)=>$(id).textContent=String(vals[i]).padStart(2,"0"));
+      if(anchorTime){
+        const cycleTotal=target-anchorTime;
+        const usedPct=Math.min(100,Math.max(0,(now-anchorTime)/cycleTotal*100));
+        $("progressFill").style.width=usedPct+"%";
+        $("progressLabel").textContent="剩余 "+Math.round(100-usedPct)+"%";
+      }
     }
     function renderCalendar(){
       const year=view.getFullYear(),month=view.getMonth(); $("monthTitle").textContent=`${year}年 ${month+1}月`;
@@ -399,7 +435,7 @@
       events.sort((a,b)=>new Date(b.at)-new Date(a.at)); const last=events.find(e=>e.type==="global");
       $("eventCount").textContent=events.length; $("globalCount").textContent=events.filter(e=>e.type==="global").length;
       if(last){
-        const anchor=new Date(last.at); predStart=addDays(anchor,4); predEnd=addDays(anchor,7); target=predEnd.getTime();
+        const anchor=new Date(last.at); anchorTime=anchor.getTime(); predStart=addDays(anchor,4); predEnd=addDays(anchor,7); target=predEnd.getTime();
         $("predRangeHero").textContent=`预计 ${dateOnly(predStart)} — ${dateOnly(predEnd)}`;
         const daysSinceAnchor=Math.floor((Date.now()-anchor)/864e5);
         $("daysAgo").textContent=Math.max(0,daysSinceAnchor)+" 天前"; $("lastAt").textContent=fmt(last.at); $("lastLink").href=last.url;
