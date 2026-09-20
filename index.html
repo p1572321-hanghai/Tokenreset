@@ -435,7 +435,7 @@
       events.sort((a,b)=>new Date(b.at)-new Date(a.at)); const last=events.find(e=>e.type==="global");
       $("eventCount").textContent=events.length; $("globalCount").textContent=events.filter(e=>e.type==="global").length;
       if(last){
-        const anchor=new Date(last.at); anchorTime=anchor.getTime(); predStart=addDays(anchor,4); predEnd=addDays(anchor,7); target=predEnd.getTime();
+        const anchor=new Date(last.at); anchorTime=anchor.getTime(); predStart=addDays(anchor,4); predEnd=addDays(anchor,7); target=Date.now()+24*3600*1000;
         $("predRangeHero").textContent=`预计 ${dateOnly(predStart)} — ${dateOnly(predEnd)}`;
         const daysSinceAnchor=Math.floor((Date.now()-anchor)/864e5);
         $("daysAgo").textContent=Math.max(0,daysSinceAnchor)+" 天前"; $("lastAt").textContent=fmt(last.at); $("lastLink").href=last.url;
