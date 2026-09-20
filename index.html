@@ -246,12 +246,12 @@
         <div><h2>重置时间 · 按时区查看</h2><p>所有历史重置时间自动转换到目标时区，支持 ICS 日历订阅</p></div>
       </div>
       <div class="tz-chips">
-        <a href="when/codex-reset-beijing.html">🇨🇳 北京时间 UTC+8</a>
-        <a href="when/codex-reset-tokyo.html">🇯🇵 东京时间 UTC+9</a>
-        <a href="when/codex-reset-pst.html">🇺🇸 太平洋时间 PT</a>
-        <a href="when/codex-reset-newyork.html">🇺🇸 纽约时间 ET</a>
-        <a href="when/codex-reset-london.html">🇬🇧 伦敦时间 GMT</a>
-        <a href="when/codex-reset-utc.html">🌐 UTC 时间</a>
+        <a href="#">🇨🇳 北京时间 UTC+8</a>
+        <a href="#">🇯🇵 东京时间 UTC+9</a>
+        <a href="#">🇺🇸 太平洋时间 PT</a>
+        <a href="#">🇺🇸 纽约时间 ET</a>
+        <a href="#">🇬🇧 伦敦时间 GMT</a>
+        <a href="#">🌐 UTC 时间</a>
       </div>
     </section>
 
@@ -266,22 +266,22 @@
       </div>
       <div class="search-results" id="searchResults"></div>
       <div class="search-entry-grid" id="searchEntryGrid">
-        <a class="search-card error" href="errors/out-of-messages.html">
+        <a class="search-card error" href="#">
           <span class="search-icon">⚠️</span>
           <strong>报错解答</strong>
           <p>out of messages / message limit / usage cap 等报错含义与解决</p>
         </a>
-        <a class="search-card rule" href="rules/thinking-counts-toward-limit.html">
+        <a class="search-card rule" href="#">
           <span class="search-icon">📖</span>
           <strong>规则说明</strong>
           <p>Thinking / Subagent / Cache 算不算额度？官方规则解读</p>
         </a>
-        <a class="search-card limit" href="limits/pro-daily-limit.html">
+        <a class="search-card limit" href="#">
           <span class="search-icon">📊</span>
           <strong>额度数据</strong>
           <p>Pro / Max / Plus 各等级每日额度一览与历史变更</p>
         </a>
-        <a class="search-card guide" href="guides/how-to-check-usage.html">
+        <a class="search-card guide" href="#">
           <span class="search-icon">🛠️</span>
           <strong>使用教程</strong>
           <p>怎么看剩余额度、被限后怎么切账号等操作指南</p>
@@ -477,47 +477,47 @@
 
     // ========== 搜索框模糊匹配 ==========
     const SEARCH_INDEX = [
-      { cat:"error", catName:"报错", url:"errors/out-of-messages.html",
+      { cat:"error", catName:"报错", url:"#",
         title:"out of messages 消息额度用完",
         keywords:"out of messages message limit 用完 额度 消息 重置 今天 claude chatgpt 报错",
         desc:"You've reached the message limit — 消息额度用完怎么办？" },
-      { cat:"error", catName:"报错", url:"errors/message-limit.html",
+      { cat:"error", catName:"报错", url:"#",
         title:"message limit reached 消息限额已达上限",
         keywords:"message limit reached 限额 上限 达 触 频率 重置周期 每日",
         desc:"Message limit reached — 消息限额已达上限" },
-      { cat:"error", catName:"报错", url:"errors/usage-capped.html",
+      { cat:"error", catName:"报错", url:"#",
         title:"usage cap reached 用量上限",
         keywords:"usage cap reached 用量 上限 api 高级功能 token 恢复 提升",
         desc:"Usage cap reached — 用量上限已达，如何恢复访问" },
-      { cat:"rule", catName:"规则", url:"rules/thinking-counts-toward-limit.html",
+      { cat:"rule", catName:"规则", url:"#",
         title:"Thinking 模式算不算额度",
         keywords:"thinking 算不算 额度 深度思考 推理 token 计费 消息次数 消耗",
         desc:"Thinking 模式算不算额度？深度解析用量计算规则" },
-      { cat:"rule", catName:"规则", url:"rules/subagent-usage.html",
+      { cat:"rule", catName:"规则", url:"#",
         title:"Subagent 子代理算不算额度",
         keywords:"subagent 子代理 算不算 额度 分摊 调用 主账号 用量",
         desc:"Subagent（子代理）调用算不算额度？用量分摊规则" },
-      { cat:"rule", catName:"规则", url:"rules/cache-counts.html",
+      { cat:"rule", catName:"规则", url:"#",
         title:"Cache 缓存命中算不算额度",
         keywords:"cache 缓存 算不算 额度 prompt caching 命中 折扣 token 计费",
         desc:"Cache（缓存）命中算不算额度？Prompt Caching 计费规则" },
-      { cat:"limit", catName:"额度", url:"limits/pro-daily-limit.html",
+      { cat:"limit", catName:"额度", url:"#",
         title:"Pro 每日额度多少",
         keywords:"pro 每日 额度 多少 消息 限制 50条 重置 订阅 用量",
         desc:"Pro 每日额度多少？消息限制与用量数据一览" },
-      { cat:"limit", catName:"额度", url:"limits/max-limit.html",
+      { cat:"limit", catName:"额度", url:"#",
         title:"Max 等级额度多少",
         keywords:"max 等级 额度 多少 消息 限制 最高订阅 升级 pro 区别",
         desc:"Max 等级额度多少？最高订阅消息限制详解" },
-      { cat:"limit", catName:"额度", url:"limits/plus-limit.html",
+      { cat:"limit", catName:"额度", url:"#",
         title:"Plus 等级额度多少",
         keywords:"plus 等级 额度 多少 消息 限制 入门订阅 免费 pro 区别",
         desc:"Plus 等级额度多少？入门订阅消息限制说明" },
-      { cat:"guide", catName:"教程", url:"guides/how-to-check-usage.html",
+      { cat:"guide", catName:"教程", url:"#",
         title:"怎么看剩余额度 /usage 命令",
         keywords:"怎么看 剩余 额度 用量 usage 命令 查询 查看 /usage /limit 统计",
         desc:"怎么看剩余额度？各 AI 助手用量查询方法汇总" },
-      { cat:"guide", catName:"教程", url:"guides/how-to-switch-account.html",
+      { cat:"guide", catName:"教程", url:"#",
         title:"被限后怎么切换账号",
         keywords:"怎么 切换 账号 被限 用完 多账号 管理 登出 登录 风控",
         desc:"被限后怎么切换账号？多账号管理与切换教程" }
@@ -543,7 +543,7 @@
       }).filter(r => r.score > 0).sort((a,b) => b.score - a.score).slice(0, 6);
 
       if (scored.length === 0) {
-        searchResults.innerHTML = `<div class="search-result-empty">没有找到匹配的问题，试试其他关键词，或 <a href="errors/out-of-messages.html">浏览全部解答</a></div>`;
+        searchResults.innerHTML = `<div class="search-result-empty">没有找到匹配的问题，试试其他关键词，或 <a href="#">浏览全部解答</a></div>`;
         entryGrid.style.display = "none";
       } else {
         searchResults.innerHTML = scored.map(r =>
