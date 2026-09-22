@@ -202,7 +202,7 @@
       <article class="panel countdown">
         <div class="eyebrow"><span class="spark">✦</span> next estimated reset</div>
         <h1>距离预测重置窗口结束</h1>
-        <p class="countdown-sub" id="predRangeHero">正在读取历史重置记录…</p>
+        <!-- <p class="countdown-sub" id="predRangeHero">正在读取历史重置记录…</p> -->
         <div class="countdown-text" id="countdownText">
           <span>将在</span>
           <strong id="hours">--</strong><span>小时</span>
@@ -218,7 +218,7 @@
           <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
           <span class="progress-label" id="progressLabel">剩余 --%</span>
         </div>
-        <div class="prediction-row"><p id="predText">根据最近一次全员重置后 4–7 天推算</p><div class="confidence"><span>置信度 15%</span><i></i></div></div>
+        <!-- <div class="prediction-row"><p id="predText">根据最近一次全员重置后 4–7 天推算</p><div class="confidence"><span>置信度 15%</span><i></i></div></div> -->
       </article>
 
       <div class="side">
@@ -436,17 +436,17 @@
       $("eventCount").textContent=events.length; $("globalCount").textContent=events.filter(e=>e.type==="global").length;
       if(last){
         const anchor=new Date(last.at); anchorTime=anchor.getTime(); predStart=addDays(anchor,4); predEnd=addDays(anchor,7); target=Date.now()+24*3600*1000;
-        $("predRangeHero").textContent=`预计 ${dateOnly(predStart)} — ${dateOnly(predEnd)}`;
+        // $("predRangeHero").textContent=`预计 ${dateOnly(predStart)} — ${dateOnly(predEnd)}`;
         const daysSinceAnchor=Math.floor((Date.now()-anchor)/864e5);
         $("daysAgo").textContent=Math.max(0,daysSinceAnchor)+" 天前"; $("lastAt").textContent=fmt(last.at); $("lastLink").href=last.url;
         // 窗口过后状态
         windowPassed=Date.now()>target;
         const daysPast=Math.max(0,Math.floor((Date.now()-target)/864e5));
         // 置信度：窗口内 15%，窗口过后立即降到 10%，之后每天再降 2%，最低 3%
-        const conf=windowPassed?Math.max(3,10-daysPast*2):15;
-        const confEl=document.querySelector(".confidence");
-        if(confEl){ confEl.style.setProperty("--conf",conf+"%"); confEl.querySelector("span").textContent=`置信度 ${conf}%`; }
-        $("predText").textContent=windowPassed?`预测窗口已过 ${daysPast} 天，等待官方公告`:`预测目标：${fmt(predEnd.toISOString())}`;
+        // const conf=windowPassed?Math.max(3,10-daysPast*2):15;
+        // const confEl=document.querySelector(".confidence");
+        // if(confEl){ confEl.style.setProperty("--conf",conf+"%"); confEl.querySelector("span").textContent=`置信度 ${conf}%`; }
+        // $("predText").textContent=windowPassed?`预测窗口已过 ${daysPast} 天，等待官方公告`:`预测目标：${fmt(predEnd.toISOString())}`;
       }
       $("feedCount").textContent=events.length+" 条";
       $("feed").innerHTML=events.map(e=>`<a class="feed-item" href="${esc(e.url)}" target="_blank" rel="noreferrer"><div class="feed-meta"><span class="kind ${e.type==="banked"?"banked":""}">${e.type==="global"?"全员重置":"重置卡"}</span><span>${fmt(e.at)}</span></div><div class="feed-title">${esc(e.text)}</div><span class="feed-open">查看原文 ↗</span></a>`).join("");

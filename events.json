@@ -1,8 +1,9 @@
 {
-  "updated_at": "2026-09-18T15:00:00Z",
+  "updated_at": "2026-09-23T00:00:00Z",
   "timezone": "UTC+8",
   "source": "tibo-posts",
   "events": [
+    {"id":"2102254445082116335","at":"2026-09-22T04:31:00Z","type":"global","text":"Ladies and gentlemen... start... your... ENGINES. We are almost Tuesday and I promised a reset for Tuesday. Among some other things. See you soon.","url":"https://x.com/thsottiaux/status/2102254445082116335"},
     {"id":"2098685367058612394","at":"2026-09-12T08:09:17Z","type":"global","text":"Reset all propagated. Sweet dreams.","url":"https://x.com/thsottiaux/status/2098685367058612394"},
     {"id":"2098612714704891959","at":"2026-09-12T03:20:36Z","type":"global","text":"Hi Astra users. A reset and a quick update... a reset is also landing by midnight today.","url":"https://x.com/thsottiaux/status/2098612714704891959"},
     {"id":"2097752790177370535","at":"2026-09-09T18:23:34Z","type":"banked","text":"Some banked resets not fully applying... getting another one and an email to apologize.","url":"https://x.com/thsottiaux/status/2097752790177370535"},
