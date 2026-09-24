@@ -313,6 +313,8 @@
     const TZ="Asia/Shanghai", DATA_URL=new URL("events.json",location.href).toString();
     const SUPPORT_KEY="codex-reset-support-v2", BASE_PCT=42, STEP=.4;
     const SEEDED=[
+      ["2102463847714247142","2026-09-22T18:23:00Z","banked","GPT-6 Sol and Luna are out. We are loading a banked reset into all accounts of our Plus, Pro and Business users."],
+      ["2102254445082116335","2026-09-22T04:31:00Z","global","Ladies and gentlemen... start... your... ENGINES. We are almost Tuesday and I promised a reset for Tuesday."],
       ["2098685367058612394","2026-09-12T08:09:17Z","global","Reset all propagated. Sweet dreams."],
       ["2098612714704891959","2026-09-12T03:20:36Z","global","Hi Astra users. A reset is also landing by midnight today."],
       ["2097752790177370535","2026-09-09T18:23:34Z","banked","Banked resets not fully applying. Getting another one."],
@@ -406,12 +408,12 @@
       $("minutes").textContent=String(minutes).padStart(2,"0");
       const vals=[Math.floor(diff/864e5),Math.floor(diff%864e5/36e5),Math.floor(diff%36e5/6e4),Math.floor(diff%6e4/1000)];
       ["d","h","m","s"].forEach((id,i)=>$(id).textContent=String(vals[i]).padStart(2,"0"));
-      if(anchorTime){
-        const cycleTotal=target-anchorTime;
-        const usedPct=Math.min(100,Math.max(0,(now-anchorTime)/cycleTotal*100));
-        $("progressFill").style.width=usedPct+"%";
-        $("progressLabel").textContent="剩余 "+Math.round(100-usedPct)+"%";
-      }
+      // 进度条：基于24小时倒计时的消耗进度
+      const totalCycle=24*3600*1000;
+      const elapsed=totalCycle-diff;
+      const usedPct=Math.min(100,Math.max(0,elapsed/totalCycle*100));
+      $("progressFill").style.width=usedPct+"%";
+      $("progressLabel").textContent="剩余 "+Math.round(100-usedPct)+"%";
     }
     function renderCalendar(){
       const year=view.getFullYear(),month=view.getMonth(); $("monthTitle").textContent=`${year}年 ${month+1}月`;
