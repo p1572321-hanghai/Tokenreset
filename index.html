@@ -183,6 +183,39 @@
     @keyframes fade { to { opacity:.5; } }
     @media (max-width:900px) { .overview,.main-grid{grid-template-columns:1fr}.side{grid-template-columns:1fr 1fr}.stats{grid-template-columns:repeat(2,1fr)}.feed{max-height:none}.clock{gap:24px} }
     @media (max-width:620px) { .shell{padding:20px 14px 48px}.brand-copy span,.live-pill span{display:none}.live-pill{width:42px;padding:0;justify-content:center}.countdown{padding:24px 20px;min-height:310px}.countdown-text strong{font-size:36px}.clock{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.clock-unit{min-width:0}.clock-unit strong{font-size:42px;letter-spacing:-.08em}.clock-unit span{display:block;margin:8px 0 0}.prediction-row{align-items:flex-start;flex-direction:column}.side{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:15px}.main-grid{display:block}.calendar{padding:19px 12px;margin-bottom:18px}.panel-head{align-items:flex-start}.month-nav{margin-top:-3px}.month-title{min-width:88px}.weekdays,.days{gap:4px}.day{min-height:58px;padding:7px;border-radius:10px}.event-tag{left:4px;right:4px;bottom:5px;padding:3px 1px;font-size:9px}.pred-dot{right:7px;top:7px}.feed-panel{padding:20px 16px}.footer{align-items:flex-start;flex-direction:column} }
+    /* 概率预测卡片 */
+    .prob-panel{padding:24px;margin:18px 0;}
+    .prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px;}
+    .prob-card{padding:20px;border-radius:18px;background:var(--soft);text-align:center;transition:.2s;}
+    .prob-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(21,40,31,.08);}
+    .prob-card .prob-val{font-size:38px;font-weight:700;letter-spacing:-.04em;line-height:1;}
+    .prob-card .prob-val.low{color:var(--muted);}
+    .prob-card .prob-val.mid{color:var(--yellow);}
+    .prob-card .prob-val.high{color:var(--green);}
+    .prob-card .prob-label{margin-top:8px;font-size:13px;color:var(--muted);}
+    .prob-card .prob-sub{margin-top:4px;font-size:11px;color:var(--muted);opacity:.7;}
+    .prob-bar{height:6px;border-radius:999px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:12px;}
+    .prob-bar-fill{height:100%;border-radius:999px;transition:width .6s ease;}
+    .prob-meta{display:flex;justify-content:space-between;margin-top:16px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);}
+    .prob-meta strong{color:var(--ink);}
+    @media(max-width:620px){.prob-grid{grid-template-columns:1fr;}.prob-card .prob-val{font-size:32px;}}
+    /* 额度限制百科 */
+    .limit-panel{padding:24px;margin:18px 0;}
+    .limit-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+    .limit-tab{padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface-solid);color:var(--muted);font-size:13px;cursor:pointer;transition:.15s;}
+    .limit-tab.active{background:var(--green);color:#fff;border-color:var(--green);}
+    .limit-table{width:100%;border-collapse:collapse;font-size:13px;}
+    .limit-table th,.limit-table td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line);}
+    .limit-table th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em;}
+    .limit-table td strong{color:var(--green);}
+    .limit-table tr:hover td{background:var(--soft);}
+    .limit-note{margin-top:14px;padding:14px 16px;border-radius:12px;background:var(--green-soft);color:var(--green);font-size:12.5px;line-height:1.6;}
+    .limit-note b{color:var(--green);}
+    .kind.reset{color:var(--green);background:var(--green-soft);}
+    .kind.banked{color:#967000;background:var(--yellow-soft);}
+    .kind.limits{color:var(--blue);background:rgba(76,111,255,.1);}
+    .kind.codex{color:#7c3aed;background:rgba(124,58,237,.1);}
+    .kind.note{color:var(--muted);background:var(--soft);}
   </style>
 </head>
 <body>
@@ -239,6 +272,50 @@
       <article class="panel stat"><span>历史记录</span><strong id="eventCount">—</strong></article>
       <article class="panel stat"><span>全员重置</span><strong id="globalCount">—</strong></article>
       <article class="panel stat"><span>最后更新</span><strong class="small" id="updatedAt">—</strong></article>
+    </section>
+
+    <section class="panel prob-panel" id="probPanel">
+      <div class="panel-head">
+        <div><h2>重置概率预测</h2><p>基于历史 <span id="probSample">—</span> 次全员重置间隔统计</p></div>
+        <span class="live-pill"><i class="live-dot"></i><span id="probDaysAgo">距上次 — 天</span></span>
+      </div>
+      <div class="prob-grid" id="probGrid">
+        <div class="prob-card">
+          <div class="prob-val" id="prob24">—%</div>
+          <div class="prob-label">未来 24 小时</div>
+          <div class="prob-sub" id="prob24Sub">发生重置概率</div>
+          <div class="prob-bar"><div class="prob-bar-fill" id="prob24Bar" style="width:0%;background:var(--muted)"></div></div>
+        </div>
+        <div class="prob-card">
+          <div class="prob-val" id="prob48">—%</div>
+          <div class="prob-label">未来 48 小时</div>
+          <div class="prob-sub">发生重置概率</div>
+          <div class="prob-bar"><div class="prob-bar-fill" id="prob48Bar" style="width:0%;background:var(--muted)"></div></div>
+        </div>
+        <div class="prob-card">
+          <div class="prob-val" id="probAvg">—天</div>
+          <div class="prob-label">平均重置间隔</div>
+          <div class="prob-sub" id="probMedian">中位数 — 天</div>
+          <div class="prob-bar"><div class="prob-bar-fill" id="probAvgBar" style="width:0%;background:var(--green-bright)"></div></div>
+        </div>
+      </div>
+      <div class="prob-meta">
+        <span>最常见时段：<strong id="probPeak">—</strong></span>
+        <span>最长等待：<strong id="probMax">— 天</strong></span>
+        <span>最短间隔：<strong id="probMin">— 天</strong></span>
+      </div>
+    </section>
+
+    <section class="panel limit-panel" id="limitPanel">
+      <div class="panel-head">
+        <div><h2>额度限制百科</h2><p>Codex / ChatGPT Work 各模型额度一览，附历史变更</p></div>
+      </div>
+      <div class="limit-tabs" id="limitTabs">
+        <button class="limit-tab active" data-tab="codex">Codex 额度</button>
+        <button class="limit-tab" data-tab="models">模型限制</button>
+        <button class="limit-tab" data-tab="plans">套餐对比</button>
+      </div>
+      <div id="limitContent"></div>
     </section>
 
     <section class="tz-entry panel">
@@ -451,7 +528,11 @@
         // $("predText").textContent=windowPassed?`预测窗口已过 ${daysPast} 天，等待官方公告`:`预测目标：${fmt(predEnd.toISOString())}`;
       }
       $("feedCount").textContent=events.length+" 条";
-      $("feed").innerHTML=events.map(e=>`<a class="feed-item" href="${esc(e.url)}" target="_blank" rel="noreferrer"><div class="feed-meta"><span class="kind ${e.type==="banked"?"banked":""}">${e.type==="global"?"全员重置":"重置卡"}</span><span>${fmt(e.at)}</span></div><div class="feed-title">${esc(e.text)}</div><span class="feed-open">查看原文 ↗</span></a>`).join("");
+      $("feed").innerHTML=events.map(e=>{
+        const cat=classifyTweet(e.text,e.type);
+        return `<a class="feed-item" href="${esc(e.url)}" target="_blank" rel="noreferrer"><div class="feed-meta"><span class="kind ${cat.cls}">${cat.label}</span><span>${fmt(e.at)}</span></div><div class="feed-title">${esc(e.text)}</div><span class="feed-open">查看原文 ↗</span></a>`;
+      }).join("");
+      renderProbability();
       renderCalendar(); tick();
     }
     async function load(){
@@ -476,6 +557,120 @@
     const savedTheme=localStorage.getItem("reset-theme"); if(savedTheme)document.documentElement.dataset.theme=savedTheme;
     $("themeBtn").onclick=()=>{const next=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=next;localStorage.setItem("reset-theme",next)};
     renderSupport(); load(); setInterval(tick,1000);
+
+    // ========== 重置概率预测模型 ==========
+    function renderProbability(){
+      const globals=events.filter(e=>e.type==="global").map(e=>new Date(e.at).getTime()).sort((a,b)=>a-b);
+      if(globals.length<2){ $("probSample").textContent="0"; return; }
+      // 计算间隔（天）
+      const intervals=[];
+      for(let i=1;i<globals.length;i++) intervals.push((globals[i]-globals[i-1])/864e5);
+      const n=intervals.length;
+      const avg=intervals.reduce((s,v)=>s+v,0)/n;
+      const sorted=[...intervals].sort((a,b)=>a-b);
+      const median=sorted[Math.floor(n/2)];
+      const min=Math.min(...intervals), max=Math.max(...intervals);
+      // 距上次重置的天数
+      const last=globals[globals.length-1];
+      const daysSince=(Date.now()-last)/864e5;
+      $("probSample").textContent=n;
+      $("probDaysAgo").textContent=`距上次 ${daysSince.toFixed(1)} 天`;
+      $("probAvg").textContent=avg.toFixed(1)+"天";
+      $("probMedian").textContent=`中位数 ${median.toFixed(1)} 天`;
+      $("probMax").textContent=max.toFixed(1)+" 天";
+      $("probMin").textContent=min.toFixed(1)+" 天";
+      // 基于正态分布近似计算概率
+      const mean=avg, std=Math.sqrt(intervals.reduce((s,v)=>s+(v-mean)**2,0)/n);
+      function normCdf(x){ const t=1/(1+0.2316419*Math.abs((x-mean)/std)); const d=0.3989423*Math.exp(-((x-mean)**2)/(2*std*std)); const p=d*t*(0.3193815+t*(-0.3565638+t*(1.781478+t*(-1.821256+t*1.330274)))); return (x-mean)>=0?1-p:p; }
+      const p24=Math.max(0,Math.min(1,normCdf(daysSince+1)-normCdf(daysSince)))*100;
+      const p48=Math.max(0,Math.min(1,normCdf(daysSince+2)-normCdf(daysSince)))*100;
+      function setProb(id,val,bar){
+        const v=Math.round(val);
+        $(id).textContent=v+"%";
+        const barEl=$(bar); barEl.style.width=v+"%";
+        barEl.style.background=v<15?"var(--muted)":v<35?"var(--yellow)":"var(--green-bright)";
+        $(id).className="prob-val "+(v<15?"low":v<35?"mid":"high");
+      }
+      setProb("prob24",p24,"prob24Bar");
+      setProb("prob48",p48,"prob48Bar");
+      $("prob24Sub").textContent=p24<5?"较低概率":p24<20?"中等概率":"较高概率";
+      $("probAvgBar").style.width=Math.min(100,daysSince/avg*100)+"%";
+      // 最常见重置时段（UTC小时）
+      const hours=globals.map(t=>new Date(t).getUTCHours());
+      const hourCount={}; hours.forEach(h=>hourCount[h]=(hourCount[h]||0)+1);
+      const peakHour=Object.entries(hourCount).sort((a,b)=>b[1]-a[1])[0];
+      const peakLocal=new Date(); peakLocal.setUTCHours(Number(peakHour[0]),0,0,0);
+      $("probPeak").textContent=peakLocal.toLocaleTimeString("zh-CN",{timeZone:TZ,hour:"2-digit",minute:"2-digit"})+" 左右";
+    }
+
+    // ========== 推文分类 ==========
+    function classifyTweet(text,type){
+      const t=text.toLowerCase();
+      if(type==="global"||/reset all|all reset|global reset|reset.*everyone|reset.*all|usage.*reset|rate.*limit.*reset/i.test(t))
+        return {cls:"reset",label:"RESET 全员重置"};
+      if(type==="banked"||/banked reset|bank reset/i.test(t))
+        return {cls:"banked",label:"BANKED 重置卡"};
+      if(/usage limit|rate limit|message limit|cap|usage cap/i.test(t))
+        return {cls:"limits",label:"LIMITS 额度调整"};
+      if(/codex|astra|gpt-6|luna/i.test(t))
+        return {cls:"codex",label:"CODEX 模型动态"};
+      return {cls:"note",label:"NOTE 其他动态"};
+    }
+
+    // ========== 额度限制百科 ==========
+    const LIMIT_DATA={
+      codex:{
+        title:"Codex 5小时窗口额度",
+        headers:["模型","Plus","Pro","Business"],
+        rows:[
+          ["GPT-6 Astra","—","<strong>无限</strong>","<strong>无限</strong>"],
+          ["GPT-6 Sol","—","500 条/5小时","500 条/5小时"],
+          ["GPT-6 Terra","—","200 条/5小时","200 条/5小时"],
+          ["GPT-6 Luna","—","100 条/5小时","100 条/5小时"],
+          ["GPT-5.4","200 条/5小时","<strong>无限</strong>","<strong>无限</strong>"],
+          ["o3","150 条/5小时","400 条/5小时","400 条/5小时"],
+          ["GPT-4o","400 条/5小时","<strong>无限</strong>","<strong>无限</strong>"]
+        ],
+        note:"<b>5小时窗口：</b>每 5 小时滚动重置一次，而非每日固定重置。超过额度会暂时限流，等待窗口滑动后恢复。"
+      },
+      models:{
+        title:"各模型能力与限制",
+        headers:["模型","上下文","Thinking","联网","适用场景"],
+        rows:[
+          ["GPT-6 Astra","2M 字符","✅ 支持","✅ 支持","复杂编程、深度推理"],
+          ["GPT-6 Sol","1M 字符","✅ 支持","✅ 支持","日常编程、多模态"],
+          ["GPT-6 Terra","1M 字符","✅ 支持","❌ 无","快速任务、轻量推理"],
+          ["GPT-6 Luna","128K","❌ 无","❌ 无","简单问答、快速响应"],
+          ["o3","200K","✅ 强推理","✅ 支持","数学、逻辑、代码"],
+          ["GPT-4o","128K","❌ 无","✅ 支持","多模态、视觉理解"]
+        ],
+        note:"<b>Thinking 模式：</b>深度思考模式会消耗更多额度，但推理质量更高。Pro 及以上套餐可用。"
+      },
+      plans:{
+        title:"套餐对比",
+        headers:["特性","Plus","Pro","Business"],
+        rows:[
+          ["月费","$20","$200","$300/席"],
+          ["Codex Astra","❌","✅","✅"],
+          ["Codex Sol","❌","500/5h","500/5h"],
+          ["重置卡","✅ 被动发放","✅ 被动发放","✅ 被动发放"],
+          ["5小时窗口","200 条","500 条起","500 条起"],
+          ["团队协作","❌","❌","✅"],
+          ["API 额度","5M tokens","10M tokens","无限"]
+        ],
+        note:"<b>重置卡（Banked Reset）：</b>官方在全员重置时会额外发放一张重置卡，可在 5 小时窗口额度用完时手动使用，立即恢复额度。"
+      }
+    };
+    function renderLimit(tab){
+      const d=LIMIT_DATA[tab];
+      const html=`<table class="limit-table"><thead><tr>${d.headers.map(h=>`<th>${h}</th>`).join("")}</tr></thead><tbody>${d.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table><div class="limit-note">${d.note}</div>`;
+      $("limitContent").innerHTML=html;
+    }
+    document.querySelectorAll(".limit-tab").forEach(t=>t.onclick=()=>{
+      document.querySelectorAll(".limit-tab").forEach(x=>x.classList.remove("active"));
+      t.classList.add("active"); renderLimit(t.dataset.tab);
+    });
+    renderLimit("codex");
 
     // ========== 搜索框模糊匹配 ==========
     const SEARCH_INDEX = [
