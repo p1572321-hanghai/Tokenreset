@@ -93,6 +93,25 @@
     .last-main p { margin:5px 0 0; color:var(--muted); font-size:13px; }
     .text-link { color:var(--green); font-size:13px; font-weight:650; text-decoration:none; }
     .text-link:hover { text-decoration:underline; }
+    .usage-card { padding:24px; display:flex; flex-direction:column; gap:14px; min-height:198px; }
+    .usage-card.empty { justify-content:center; align-items:center; text-align:center; }
+    .usage-head { display:flex; align-items:center; justify-content:space-between; }
+    .usage-head .label { color:var(--muted); font-size:13px; }
+    .usage-head-right { display:flex; align-items:center; gap:8px; }
+    .usage-head .badge { font-size:11px; padding:3px 8px; border-radius:999px; background:var(--green-soft); color:var(--green); font-weight:700; }
+    .usage-reset-btn { font-size:12px; padding:3px 10px; border-radius:999px; border:1px solid var(--line); background:var(--surface); color:var(--ink); cursor:pointer; font-weight:600; transition:all .2s; white-space:nowrap; }
+    .usage-reset-btn:hover { border-color:var(--green); color:var(--green); }
+    .usage-reset-btn:active { transform:scale(.95); }
+    .usage-reset-btn.syncing { opacity:.6; pointer-events:none; }
+    .usage-percent { display:flex; align-items:baseline; gap:8px; }
+    .usage-percent strong { font-size:46px; line-height:1; letter-spacing:-.04em; font-weight:700; }
+    .usage-percent span { font-size:20px; color:var(--muted); font-weight:600; }
+    .usage-bar { width:100%; height:8px; border-radius:999px; background:var(--soft); overflow:hidden; }
+    .usage-bar i { display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--green-bright),var(--yellow)); transition:width .5s ease; }
+    .usage-meta { display:flex; justify-content:space-between; font-size:12px; color:var(--muted); }
+    .usage-empty { color:var(--muted); font-size:13px; }
+    .usage-empty b { color:var(--ink); }
+    .usage-empty small { display:block; margin-top:6px; font-size:11px; opacity:.7; }
     .support { padding:20px 22px; display:flex; align-items:center; justify-content:space-between; gap:14px; }
     .support-copy strong { display:block; font-size:14px; }
     .support-copy span { color:var(--muted); font-size:12px; }
@@ -259,6 +278,24 @@
           <div class="section-label"><span>最近一次全员重置</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 12a8 8 0 1 1-2.3-5.7L20 8.6M20 4v4.6h-4.6"/></svg></div>
           <div class="last-main"><strong id="daysAgo">—</strong><p id="lastAt">等待数据</p></div>
           <a class="text-link" id="lastLink" href="#" target="_blank" rel="noreferrer">查看原始动态 ↗</a>
+        </article>
+        <article class="panel usage-card" id="usageCard">
+          <div class="usage-head">
+            <span class="label">我的 Codex 剩余额度</span>
+            <div class="usage-head-right">
+              <span class="badge" id="usageBadge">已同步</span>
+              <button class="usage-reset-btn" id="usageResetBtn" type="button" title="同步最新额度">↻ 同步</button>
+            </div>
+          </div>
+          <div id="usageBody">
+            <div class="usage-percent"><strong id="usagePct">—</strong><span>%</span></div>
+            <div class="usage-bar"><i id="usageBar" style="width:0%"></i></div>
+            <div class="usage-meta"><span id="usageReset">—</span><span id="usageTime">—</span></div>
+          </div>
+          <div class="usage-empty" id="usageEmpty" style="display:none">
+            <b>尚未采集到额度数据</b>
+            <small>请打开 chatgpt.com 并登录，插件会自动读取你的剩余额度</small>
+          </div>
         </article>
         <article class="panel support">
           <div class="support-copy"><strong>你也认为会重置？</strong><span>社区预测支持率 <b id="supportPct">42%</b></span></div>

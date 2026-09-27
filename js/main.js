@@ -354,3 +354,107 @@ const TZ="Asia/Shanghai", DATA_URL=new URL("events.json",location.href).toString
     searchInput.addEventListener("input", () => fuzzySearch(searchInput.value));
     searchInput.addEventListener("keydown", e => { if (e.key === "Enter") fuzzySearch(searchInput.value); });
     searchBtn.addEventListener("click", () => fuzzySearch(searchInput.value));
+
+    // ========== 我的额度（从 Chrome 插件采集的数据读取）==========
+    const IS_EXT = typeof chrome !== "undefined" && chrome.runtime && typeof chrome.runtime.getURL === "function";
+    const USAGE_KEY = "codex-usage-snapshot";
+
+    function storageGet(key, def) {
+      if (IS_EXT) {
+        return new Promise(resolve => {
+          try { chrome.storage.local.get(key, (result) => resolve(result[key] !== undefined ? result[key] : def)); }
+          catch (e) { resolve(def); }
+        });
+      } else {
+        try {
+          const v = localStorage.getItem(key);
+          return Promise.resolve(v !== null ? JSON.parse(v) : def);
+        } catch (e) { return Promise.resolve(def); }
+      }
+    }
+
+    function fmtTime(ts) {
+      if (!ts) return "—";
+      const diff = Math.floor((Date.now() - ts) / 60000);
+      if (diff < 1) return "刚刚";
+      if (diff < 60) return diff + " 分钟前";
+      const hrs = Math.floor(diff / 60);
+      if (hrs < 24) return hrs + " 小时前";
+      return Math.floor(hrs / 24) + " 天前";
+    }
+
+    function renderUsage(snap) {
+      const body = $("usageBody");
+      const empty = $("usageEmpty");
+      const card = $("usageCard");
+      if (!snap || snap.percent === null) {
+        body.style.display = "none";
+        empty.style.display = "block";
+        card.classList.add("empty");
+        return;
+      }
+      body.style.display = "";
+      empty.style.display = "none";
+      card.classList.remove("empty");
+      $("usagePct").textContent = snap.percent;
+      $("usageBar").style.width = snap.percent + "%";
+      $("usageReset").textContent = snap.resetLabel || snap.resetText || "—";
+      $("usageTime").textContent = "更新于 " + fmtTime(snap.capturedAt);
+      $("usageBadge").textContent = snap.percent > 20 ? "正常" : (snap.percent > 0 ? "偏低" : "已耗尽");
+    }
+
+    async function loadUsage() {
+      try {
+        const snap = await storageGet(USAGE_KEY, null);
+        renderUsage(snap);
+      } catch (e) {
+        renderUsage(null);
+      }
+    }
+
+    if (IS_EXT && chrome.storage && chrome.storage.onChanged) {
+      chrome.storage.onChanged.addListener((changes, area) => {
+        if (area === "local" && changes[USAGE_KEY]) {
+          renderUsage(changes[USAGE_KEY].newValue);
+        }
+      });
+    }
+
+    function setSyncBtnState(isSyncing) {
+      const btn = $("usageResetBtn");
+      if (!btn) return;
+      if (isSyncing) { btn.classList.add("syncing"); btn.textContent = "同步中…"; }
+      else { btn.classList.remove("syncing"); btn.textContent = "↻ 同步"; }
+    }
+
+    async function syncUsage() {
+      if (!IS_EXT) {
+        alert("请安装 Chrome 扩展后使用同步功能，或在 chatgpt.com 的「使用情况」页面查看额度");
+        return;
+      }
+      setSyncBtnState(true);
+      try {
+        const tabs = await chrome.tabs.query({ url: ["*://chatgpt.com/*", "*://chat.openai.com/*"] });
+        if (tabs.length > 0) {
+          const tab = tabs[0];
+          chrome.tabs.update(tab.id, { active: true });
+          try {
+            chrome.tabs.sendMessage(tab.id, { action: "rescan" }, () => {
+              setTimeout(() => { loadUsage(); setSyncBtnState(false); }, 1500);
+            });
+          } catch (e) {
+            setTimeout(() => { loadUsage(); setSyncBtnState(false); }, 1500);
+          }
+        } else {
+          chrome.tabs.create({ url: "https://chatgpt.com" });
+          setSyncBtnState(false);
+          alert("已打开 ChatGPT，请点击左下角头像 → 设置 → 使用情况 查看额度，插件会自动同步");
+        }
+      } catch (e) {
+        setSyncBtnState(false);
+      }
+    }
+
+    if ($("usageResetBtn")) $("usageResetBtn").onclick = syncUsage;
+    loadUsage();
+    setInterval(loadUsage, 30000);
