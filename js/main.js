@@ -96,7 +96,7 @@ const TZ="Asia/Shanghai", DATA_URL=new URL("events.json",location.href).toString
       $("minutes").textContent=String(minutes).padStart(2,"0");
       const vals=[Math.floor(diff/864e5),Math.floor(diff%864e5/36e5),Math.floor(diff%36e5/6e4),Math.floor(diff%6e4/1000)];
       ["d","h","m","s"].forEach((id,i)=>$(id).textContent=String(vals[i]).padStart(2,"0"));
-      const totalCycle=24*3600*1000;
+      const totalCycle=predEnd&&predStart?predEnd.getTime()-predStart.getTime():24*3600*1000;
       const elapsed=totalCycle-diff;
       const usedPct=Math.min(100,Math.max(0,elapsed/totalCycle*100));
       $("progressFill").style.width=usedPct+"%";
@@ -124,7 +124,7 @@ const TZ="Asia/Shanghai", DATA_URL=new URL("events.json",location.href).toString
       events.sort((a,b)=>new Date(b.at)-new Date(a.at)); const last=events.find(e=>e.type==="global");
       $("eventCount").textContent=events.length; $("globalCount").textContent=events.filter(e=>e.type==="global").length;
       if(last){
-        const anchor=new Date(last.at); anchorTime=anchor.getTime(); predStart=addDays(anchor,4); predEnd=addDays(anchor,7); target=Date.now()+24*3600*1000;
+        const anchor=new Date(last.at); anchorTime=anchor.getTime(); predStart=addDays(anchor,4); predEnd=addDays(anchor,7); target=predEnd.getTime();
         const daysSinceAnchor=Math.floor((Date.now()-anchor)/864e5);
         $("daysAgo").textContent=Math.max(0,daysSinceAnchor)+" 天前"; $("lastAt").textContent=fmt(last.at); $("lastLink").href=last.url;
         windowPassed=Date.now()>target;
