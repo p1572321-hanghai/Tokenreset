@@ -1,8 +1,11 @@
 {
-  "updated_at": "2026-09-25T00:00:00Z",
+  "updated_at": "2026-09-29T10:30:00Z",
   "timezone": "UTC+8",
   "source": "tibo-posts",
   "events": [
+    {"id":"2103963215885701493","at":"2026-09-26T21:41:35Z","type":"note","text":"Sorry Gia. More resets coming next week","url":"https://x.com/thsottiaux/status/2103963215885701493"},
+    {"id":"2103911959544610829","at":"2026-09-26T18:17:54Z","type":"global","text":"Resets all propagated. That will be all. Have a fantastic weekend.","url":"https://x.com/thsottiaux/status/2103911959544610829"},
+    {"id":"2103637477760311522","at":"2026-09-26T00:07:13Z","type":"global","text":"o yes… we're back in action and we'll reset usage limits for all paid users across Codex and ChatGPT Work. Sorry about the brief disruption!","url":"https://x.com/thsottiaux/status/2103637477760311522"},
     {"id":"2102463847714247142","at":"2026-09-22T18:23:00Z","type":"banked","text":"GPT-6 Sol and Luna are out. We are loading a banked reset into all accounts of our Plus, Pro and Business users.","url":"https://x.com/thsottiaux/status/2102463847714247142"},
     {"id":"2102254445082116335","at":"2026-09-22T04:31:00Z","type":"global","text":"Ladies and gentlemen... start... your... ENGINES. We are almost Tuesday and I promised a reset for Tuesday. Among some other things. See you soon.","url":"https://x.com/thsottiaux/status/2102254445082116335"},
     {"id":"2098685367058612394","at":"2026-09-12T08:09:17Z","type":"global","text":"Reset all propagated. Sweet dreams.","url":"https://x.com/thsottiaux/status/2098685367058612394"},
