@@ -1,8 +1,12 @@
 {
-  "updated_at": "2026-09-29T10:30:00Z",
+  "updated_at": "2026-10-04T08:00:00Z",
   "timezone": "UTC+8",
   "source": "tibo-posts",
   "events": [
+    {"id":"2106233145163141249","at":"2026-10-03T04:01:28Z","type":"note","text":"Seeing some reports that the Pro 500 didn't get the reset as expected earlier. Investigating and will make up for it","url":"https://x.com/thsottiaux/status/2106233145163141249"},
+    {"id":"2106131810921136451","at":"2026-10-02T21:18:48Z","type":"global","text":"Reset all propagated. Enjoy.","url":"https://x.com/thsottiaux/status/2106131810921136451"},
+    {"id":"2105843926221660585","at":"2026-10-02T02:14:51Z","type":"global","text":"Global reset landing tomorrow 10am PST for all paid ChatGPT accounts. Apologies for the slow start with GPT-6.1 Sol, it's now back to running at expected speeds after the massive load spike in the first two days.","url":"https://x.com/thsottiaux/status/2105843926221660585"},
+    {"id":"2105120226027450685","at":"2026-09-30T02:19:07Z","type":"banked","text":"@theo Shhhhhh — DevDay banked reset announced on stage","url":"https://x.com/thsottiaux/status/2105120226027450685"},
     {"id":"2103963215885701493","at":"2026-09-26T21:41:35Z","type":"note","text":"Sorry Gia. More resets coming next week","url":"https://x.com/thsottiaux/status/2103963215885701493"},
     {"id":"2103911959544610829","at":"2026-09-26T18:17:54Z","type":"global","text":"Resets all propagated. That will be all. Have a fantastic weekend.","url":"https://x.com/thsottiaux/status/2103911959544610829"},
     {"id":"2103637477760311522","at":"2026-09-26T00:07:13Z","type":"global","text":"o yes… we're back in action and we'll reset usage limits for all paid users across Codex and ChatGPT Work. Sorry about the brief disruption!","url":"https://x.com/thsottiaux/status/2103637477760311522"},

@@ -1,6 +1,10 @@
 const TZ="Asia/Shanghai", DATA_URL=new URL("events.json",location.href).toString();
     const SUPPORT_KEY="codex-reset-support-v2", BASE_PCT=42, STEP=.4;
     const SEEDED=[
+      ["2106233145163141249","2026-10-03T04:01:28Z","note","Pro 500 didn't get the reset. Investigating and will make up for it."],
+      ["2106131810921136451","2026-10-02T21:18:48Z","global","Reset all propagated. Enjoy."],
+      ["2105843926221660585","2026-10-02T02:14:51Z","global","Global reset landing tomorrow 10am PST for all paid ChatGPT accounts."],
+      ["2105120226027450685","2026-09-30T02:19:07Z","banked","DevDay banked reset announced on stage."],
       ["2102463847714247142","2026-09-22T18:23:00Z","banked","GPT-6 Sol and Luna are out. We are loading a banked reset into all accounts of our Plus, Pro and Business users."],
       ["2102254445082116335","2026-09-22T04:31:00Z","global","Ladies and gentlemen... start... your... ENGINES. We are almost Tuesday and I promised a reset for Tuesday."],
       ["2098685367058612394","2026-09-12T08:09:17Z","global","Reset all propagated. Sweet dreams."],
