@@ -1,8 +1,14 @@
 {
-  "updated_at": "2026-10-04T08:00:00Z",
+  "updated_at": "2026-10-08T08:00:00Z",
   "timezone": "UTC+8",
   "source": "tibo-posts",
   "events": [
+    {"id":"2107597780352950624","at":"2026-10-06T22:24:02Z","type":"note","text":"Our models solved some important math problems and the team documented it in the following blogpost. Remarkable new era of scientific progress.","url":"https://x.com/thsottiaux/status/2107597780352950624"},
+    {"id":"2107368734981517634","at":"2026-10-06T07:13:00Z","type":"note","text":"Day 2.1/ We have made Auto-review free for all users signed in through a ChatGPT account. You can enable it in settings > permissions > auto-review. It does not draw usage from your plan.","url":"https://x.com/thsottiaux/status/2107368734981517634"},
+    {"id":"2107158998495748264","at":"2026-10-05T17:20:29Z","type":"note","text":"Day 1/ We have optimized the default speed to be ~50% faster across GPT-6 Astra and GPT-6.1 Sol through the subscription across all products using Sign in With ChatGPT. No changes needed on your end.","url":"https://x.com/thsottiaux/status/2107158998495748264"},
+    {"id":"2106845738814849339","at":"2026-10-04T20:35:42Z","type":"note","text":"@poteto I challenge you to do the same","url":"https://x.com/thsottiaux/status/2106845738814849339"},
+    {"id":"2106845241357824205","at":"2026-10-04T20:33:43Z","type":"note","text":"Over the next 28 days, each day we'll either ship one thing that is a clear improvement for most codex/work users or ship a full reset. Let the improvements begin.","url":"https://x.com/thsottiaux/status/2106845241357824205"},
+    {"id":"2106610099720720811","at":"2026-10-04T04:59:21Z","type":"note","text":"All right, we're locking in. Only things being worked on are simplifications, more efficiency for more usage, groundbreaking features or new models. Feedback is clear that you all want things to get simpler. On it.","url":"https://x.com/thsottiaux/status/2106610099720720811"},
     {"id":"2106233145163141249","at":"2026-10-03T04:01:28Z","type":"note","text":"Seeing some reports that the Pro 500 didn't get the reset as expected earlier. Investigating and will make up for it","url":"https://x.com/thsottiaux/status/2106233145163141249"},
     {"id":"2106131810921136451","at":"2026-10-02T21:18:48Z","type":"global","text":"Reset all propagated. Enjoy.","url":"https://x.com/thsottiaux/status/2106131810921136451"},
     {"id":"2105843926221660585","at":"2026-10-02T02:14:51Z","type":"global","text":"Global reset landing tomorrow 10am PST for all paid ChatGPT accounts. Apologies for the slow start with GPT-6.1 Sol, it's now back to running at expected speeds after the massive load spike in the first two days.","url":"https://x.com/thsottiaux/status/2105843926221660585"},

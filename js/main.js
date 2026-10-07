@@ -1,6 +1,12 @@
 const TZ="Asia/Shanghai", DATA_URL=new URL("events.json",location.href).toString();
     const SUPPORT_KEY="codex-reset-support-v2", BASE_PCT=42, STEP=.4;
     const SEEDED=[
+      ["2107597780352950624","2026-10-06T22:24:02Z","note","Models solved important math problems. New era of scientific progress."],
+      ["2107368734981517634","2026-10-06T07:13:00Z","note","Day 2.1/ Auto-review is now free and does not draw usage from your plan."],
+      ["2107158998495748264","2026-10-05T17:20:29Z","note","Day 1/ Default speed ~50% faster across GPT-6 Astra and GPT-6.1 Sol."],
+      ["2106845738814849339","2026-10-04T20:35:42Z","note","I challenge you to do the same."],
+      ["2106845241357824205","2026-10-04T20:33:43Z","note","28-day challenge: each day either a clear improvement or a full reset."],
+      ["2106610099720720811","2026-10-04T04:59:21Z","note","Locking in: simplifications, more efficiency, groundbreaking features or new models."],
       ["2106233145163141249","2026-10-03T04:01:28Z","note","Pro 500 didn't get the reset. Investigating and will make up for it."],
       ["2106131810921136451","2026-10-02T21:18:48Z","global","Reset all propagated. Enjoy."],
       ["2105843926221660585","2026-10-02T02:14:51Z","global","Global reset landing tomorrow 10am PST for all paid ChatGPT accounts."],
