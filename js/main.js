@@ -1,6 +1,12 @@
 const TZ="Asia/Shanghai", DATA_URL=new URL("events.json",location.href).toString();
     const SUPPORT_KEY="codex-reset-support-v2", BASE_PCT=42, STEP=.4;
     const SEEDED=[
+      ["2109812216212099456","2026-10-13T01:03:00Z","global","Day 8/ Reset"],
+      ["2109132167112782291","2026-10-11T04:01:00Z","global","Put the reset in the bag. All propagated."],
+      ["2109045392684032299","2026-10-10T22:16:00Z","global","Day 6/ Reset"],
+      ["2108040921044639779","2026-10-08T03:44:00Z","banked","Confirmed landed across all accounts."],
+      ["2107913674593644711","2026-10-07T19:19:00Z","banked","Day 3/ Loading a banked reset in everyone's paid accounts."],
+      ["2107676072871600470","2026-10-07T03:35:00Z","global","The vote is clear. The reset has been processed. Enjoy!"],
       ["2107597780352950624","2026-10-06T22:24:02Z","note","Models solved important math problems. New era of scientific progress."],
       ["2107368734981517634","2026-10-06T07:13:00Z","note","Day 2.1/ Auto-review is now free and does not draw usage from your plan."],
       ["2107158998495748264","2026-10-05T17:20:29Z","note","Day 1/ Default speed ~50% faster across GPT-6 Astra and GPT-6.1 Sol."],

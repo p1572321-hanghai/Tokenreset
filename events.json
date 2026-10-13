@@ -1,8 +1,17 @@
 {
-  "updated_at": "2026-10-08T08:00:00Z",
+  "updated_at": "2026-10-13T09:00:00Z",
   "timezone": "UTC+8",
   "source": "tibo-posts",
   "events": [
+    {"id":"2109812216212099456","at":"2026-10-13T01:03:00Z","type":"global","text":"Day 8/ Reset","url":"https://x.com/thsottiaux/status/2109812216212099456"},
+    {"id":"2109430343346581527","at":"2026-10-11T23:45:00Z","type":"note","text":"Day 7/ We have increased default context length for GPT-6.1 Sol to 500k when used through Codex & Work, up from 272k or an ~80% increase.","url":"https://x.com/thsottiaux/status/2109430343346581527"},
+    {"id":"2109132167112782291","at":"2026-10-11T04:01:00Z","type":"global","text":"Put the reset in the bag. All propagated.","url":"https://x.com/thsottiaux/status/2109132167112782291"},
+    {"id":"2109045392684032299","at":"2026-10-10T22:16:00Z","type":"global","text":"Day 6/ Reset","url":"https://x.com/thsottiaux/status/2109045392684032299"},
+    {"id":"2108645667451318747","at":"2026-10-09T19:47:00Z","type":"note","text":"Day 5/ Composer predictions in the desktop app. Included in the Pro plans without consuming usage.","url":"https://x.com/thsottiaux/status/2108645667451318747"},
+    {"id":"2108275041276420573","at":"2026-10-08T19:15:00Z","type":"note","text":"Day 4/ We have improved steering to be instant. Also releasing GPT-6.1 Sol ultrafast — 8x faster than Sol Standard.","url":"https://x.com/thsottiaux/status/2108275041276420573"},
+    {"id":"2108040921044639779","at":"2026-10-08T03:44:00Z","type":"banked","text":"Confirmed landed across all accounts. How are we doing so far?","url":"https://x.com/thsottiaux/status/2108040921044639779"},
+    {"id":"2107913674593644711","at":"2026-10-07T19:19:00Z","type":"banked","text":"Day 3/ The big one is GPT-6 in Chat, but today is also a little celebration day with a new high of 40M active users across Codex and ChatGPT Work. Loading a banked reset in everyone's paid accounts.","url":"https://x.com/thsottiaux/status/2107913674593644711"},
+    {"id":"2107676072871600470","at":"2026-10-07T03:35:00Z","type":"global","text":"The vote is clear and the community demands a reset. The reset has been processed. Enjoy!","url":"https://x.com/thsottiaux/status/2107676072871600470"},
     {"id":"2107597780352950624","at":"2026-10-06T22:24:02Z","type":"note","text":"Our models solved some important math problems and the team documented it in the following blogpost. Remarkable new era of scientific progress.","url":"https://x.com/thsottiaux/status/2107597780352950624"},
     {"id":"2107368734981517634","at":"2026-10-06T07:13:00Z","type":"note","text":"Day 2.1/ We have made Auto-review free for all users signed in through a ChatGPT account. You can enable it in settings > permissions > auto-review. It does not draw usage from your plan.","url":"https://x.com/thsottiaux/status/2107368734981517634"},
     {"id":"2107158998495748264","at":"2026-10-05T17:20:29Z","type":"note","text":"Day 1/ We have optimized the default speed to be ~50% faster across GPT-6 Astra and GPT-6.1 Sol through the subscription across all products using Sign in With ChatGPT. No changes needed on your end.","url":"https://x.com/thsottiaux/status/2107158998495748264"},
