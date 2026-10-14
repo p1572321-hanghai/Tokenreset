@@ -1,4 +1,4 @@
-const TZ="Asia/Shanghai", DATA_URL=new URL("events.json",location.href).toString();
+const TZ="Asia/Shanghai", DATA_URL=new URL("events.json?v="+Date.now(),location.href).toString();
     const SUPPORT_KEY="codex-reset-support-v2", BASE_PCT=42, STEP=.4;
     const SEEDED=[
       ["2109812216212099456","2026-10-13T01:03:00Z","global","Day 8/ Reset"],
